@@ -32,6 +32,7 @@ class Log
 
 public:
 
+	friend ostream & operator << (ostream & out, const Log & log);
 //----------------------------------------------------- Méthodes publiques
 
    Log (string $ref, string $cible, string $heure, string $IP, 

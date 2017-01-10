@@ -15,6 +15,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 #include "LogDAO.h"
@@ -27,7 +28,10 @@ using namespace std;
 
 Log* LogDAO::getNextLog()
 {
-	return nullptr;
+	
+	vector<string> v = {"a","b","c","d","e","f","12/12/2012","h","i","j"};
+	
+	return new Log(v[0], v[1], v[2],v[3], v[4], v[5],v[6], v[7], v[8],1,200, v[9] );
 }//----- Fin de getNextLog
 
 LogDAO::LogDAO (string $filename) : filename($filename)

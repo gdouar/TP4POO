@@ -14,6 +14,7 @@
 using namespace std;
 #include <string>
 #include <iostream>
+#include <sstream>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 
@@ -48,6 +49,21 @@ Log::Log ()
 } //----- Fin de Log
 
 
+ostream & operator << (ostream & out, const Log & log)
+{
+	std::ostringstream stm;
+	
+	out << "*** LOG *** \n Referer: " + log.ref + "\n Cible : " + log.cible + "\n Date : " + log.date 
+	+ "\n Heure : " + log.heure+"\n IP : " + log.IP + "\n Logname : " + log.logname + "\n Username : " + log.username
+	+ "\n Greenwich diff :" + log.diffGW + "\n Method : " + log.method + "\n Status : ";
+	stm << log.status;
+	out << stm.str() + "\n Data Size :";
+	stm.str(std::string());
+	stm << log.dataSize;
+	out << stm.str() + "\n Client ID : " + log.idClient;
+	
+	return out;
+} // Fin de operator <<
 
 //------------------------------------------------------------------ PRIVE
 

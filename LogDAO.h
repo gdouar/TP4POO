@@ -33,6 +33,7 @@ class LogDAO
 
 public:
 
+
 //----------------------------------------------------- Méthodes publiques
    LogDAO(string filename="");
     // Mode d'emploi : Constructeur par défaut de LogDAO.
