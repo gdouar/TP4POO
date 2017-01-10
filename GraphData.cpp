@@ -13,10 +13,11 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-#include <multimap>
+#include <map>
 #include <unordered_map>
-#include "Log.h"
+#include <string>
 //------------------------------------------------------ Include personnel
+#include "Log.h"
 #include "GraphData.h"
 
 //------------------------------------------------------------- Constantes
@@ -25,40 +26,18 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void GraphData::addLog(Log l)
+void GraphData::addLog(Log * l)
 {
 	return;
 }
 
 multimap<int, string> GraphData::get10best() const
- {
+{
 	multimap<int, string> m1;
-	return m;
+	return m1;
 }
 
-
-//------------------------------------------------- Surcharge d'opérateurs
-GraphData & GraphData::operator = ( const GraphData & unXxx )
-// Algorithme :
-//
-{
-} //----- Fin de operator =
-
-
-//-------------------------------------------- Constructeurs - destructeur
-GraphData::GraphData ( const GraphData & unGraphData )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <GraphData>" << endl;
-#endif
-} //----- Fin de GraphData (constructeur de copie)
-
-
-GraphData::GraphData (bool e, int t)
-// Algorithme :
-//
+GraphData::GraphData (bool $e, int $t) : e($e), t($t)
 {
 #ifdef MAP
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;
@@ -66,14 +45,6 @@ GraphData::GraphData (bool e, int t)
 } //----- Fin de GraphData
 
 
-GraphData::~GraphData ()
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <GraphData>" << endl;
-#endif
-} //----- Fin de ~GraphData
 
 
 //------------------------------------------------------------------ PRIVE
