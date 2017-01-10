@@ -34,7 +34,7 @@ class GraphDAO
 public:
 
 //----------------------------------------------------- Méthodes publiques
-   GraphDAO(string $filename, ofstream &  $os);
+   GraphDAO(string $filename="");
     // Mode d'emploi : Constructeur par défaut de GraphDAO.
 	
 	void serialize(GraphData & gd);
@@ -50,7 +50,7 @@ protected:
 private:			//Attributs privés
 
 	string filename;  //LE nom du fichier GraphViz
-	ofstream & os;	//Le flux de sortie sur lequel écrire le fichier.
+	ofstream os;	//Le flux de sortie sur lequel écrire le fichier.
 };
 
 //-------------------------------- Autres définitions dépendantes de <GraphDAO>

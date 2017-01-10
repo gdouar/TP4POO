@@ -54,11 +54,11 @@ private:			//Attributs privés
 	
 	string ref;					//Referer de l'entrée de log
 	string cible;				//Cible de l'entrée de log (ressource HTTP de la requête cliente)
-	string date;				//Date de l'entrée de log
 	string heure;				//Heure de l'entrée de log
 	string IP;					//IP de l'entrée de log
 	string logname;				//Logname de l'entrée de log
 	string username;			//Nom utilisateur de l'entrée de log
+	string date;				//Date de l'entrée de log
 	string diffGW; 				//Différence Greenwich de l'entrée de log
 	string method; 				//Méthode HTTP utilisée de l'entrée de log
 	int status;					//Statut de la réponse HTTP de l'entrée de log

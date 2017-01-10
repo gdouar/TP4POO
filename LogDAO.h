@@ -14,7 +14,9 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Log.h"
+
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -32,7 +34,7 @@ class LogDAO
 public:
 
 //----------------------------------------------------- Méthodes publiques
-   LogDAO(ifstream & $is);
+   LogDAO(string filename="");
     // Mode d'emploi : Constructeur par défaut de LogDAO.
 	
 	Log* getNextLog();
@@ -47,7 +49,8 @@ protected:
 
 private:			//Attributs privés
 
-	ifstream & is;	//Le flux d'entrée sur lequel lire les logs (par défaut cin)
+	ifstream is;	//Le flux d'entrée sur lequel lire les logs (par défaut cin)
+	string filename;
 };
 
 //-------------------------------- Autres définitions dépendantes de <LogDAO>

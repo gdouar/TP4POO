@@ -30,14 +30,12 @@ Log* LogDAO::getNextLog()
 	return nullptr;
 }//----- Fin de getNextLog
 
-LogDAO::LogDAO (ifstream  & $is) : is($is)
+LogDAO::LogDAO (string $filename) : filename($filename)
 {
 	#ifdef MAP
-		cout << "Appel au constructeur par défaut de <LogDAO>" << endl;
+		cout << "Appel au constructeur paramétré de <LogDAO>" << endl;
 	#endif
 }//----- Fin de LogDAO
-
-
 
 
 //------------------------------------------------------------------ PRIVE

@@ -31,7 +31,7 @@ void serialize(GraphData & gd)
 }//------ Fin de serialize
 
 
-GraphDAO::GraphDAO (string $filename, ofstream  & $os) : filename($filename), os($os)
+GraphDAO::GraphDAO (string $filename) : filename($filename)
 {
 	#ifdef MAP
 		cout << "Appel au constructeur par défaut de <GraphDAO>" << endl;
