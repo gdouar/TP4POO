@@ -16,9 +16,15 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
+#include <iterator>
+
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 #include "LogDAO.h"
+
+//-------------------- Déclarations
+void split(const string& str, vector<string>& cont);
 
 //------------------------------------------------------------- Constantes
 
@@ -26,16 +32,47 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-Log* LogDAO::getNextLog()
+Log* LogDAO::GetNextLog()
 {
-	
-	vector<string> v = {"a","b","c","d","e","f","12/12/2012","h","i","j"};
-	
-	return new Log(v[0], v[1], v[2],v[3], v[4], v[5],v[6], v[7], v[8],1,200, v[9] );
+	if(is)
+	{
+		string log;
+		if(getline(is, log))
+		{
+			vector<string> words;
+			split(log, words);
+		 
+			if(words.size() >=  10)
+			{
+				words[3] = 	words[3].substr(1, words[3].size());
+				string jour	= words[3].substr(0,10);		//Infos date
+				string horaire = words[3].substr(12,8);				
+				words[4] = words[4].substr(0, words[4].size()-1);	//Différence Greenwich
+				words[5].erase(0, 1);		//Méthode HTTP
+				words[10] = words[10].substr(1, words[10].size()-2);		//Referer
+				
+				int status;
+				int datasize;
+				
+				istringstream ((words[8])) >> status;
+				istringstream ((words[9])) >> datasize;
+				Log* l = new Log(words[10], words[6], horaire, words[0], words[1], words[2], jour, words[4], words[5], status, datasize);
+				return l;
+			}
+		}
+	}
+
+	return nullptr;
+
 }//----- Fin de getNextLog
 
 LogDAO::LogDAO (string $filename) : filename($filename)
 {
+	
+	is.open(filename);
+	if (!is.is_open())
+		cout << "Erreur à l'ouverture du fichier";
+	
 	#ifdef MAP
 		cout << "Appel au constructeur paramétré de <LogDAO>" << endl;
 	#endif
@@ -45,4 +82,10 @@ LogDAO::LogDAO (string $filename) : filename($filename)
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-
+void split(const string& str, vector<string>& cont)
+{
+    istringstream iss(str);
+    copy(istream_iterator<string>(iss),
+         istream_iterator<string>(),
+         back_inserter(cont));
+}

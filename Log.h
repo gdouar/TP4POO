@@ -16,6 +16,7 @@
 //--------------------------------------------------- Interfaces utilisées
 using namespace std;
 #include <string>
+#include <set>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -37,10 +38,12 @@ public:
 
 	friend class GraphData;
 //----------------------------------------------------- Méthodes publiques
+	bool CanBeIgnored() const; 
+	//Méthode renvoyant vrai si le log ne doit pas être considéré par le flag -e
 
    Log (string $ref, string $cible, string $heure, string $IP, 
    string $logname, string $username, string $date, string $diffGW, 
-	string $method, int $status, int $dataSize, string $idClient);
+	string $method, int $status, int $dataSize);
     // Mode d'emploi : Constructeur paramétré de Log.
    
    Log();
@@ -55,6 +58,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 private:			//Attributs privés
+	static set<string> ignored_extensions;		//Tableau statique des extensions ignorées par -e
 	
 	string ref;					//Referer de l'entrée de log
 	string cible;				//Cible de l'entrée de log (ressource HTTP de la requête cliente)
@@ -67,7 +71,7 @@ private:			//Attributs privés
 	string method; 				//Méthode HTTP utilisée de l'entrée de log
 	int status;					//Statut de la réponse HTTP de l'entrée de log
 	int dataSize;				//Taille en octets de la réponse comprise dans l'entrée de log
-	string idClient;			//Identificateur du client navigateur de l'entrée de log
+	
 };
 
 //-------------------------------- Autres définitions dépendantes de <Log>

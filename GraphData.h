@@ -31,16 +31,12 @@ class GraphData
 {
 //----------------------------------------------------------------- PUBLIC
 
-public:
-
-//----------------------------------------------------- Méthodes/fonctions amies
-
-
-	friend class GraphDAO;
+public: 
 //----------------------------------------------------- Méthodes publiques
 
 	void addLog(Log* l);
 	// Mde : ajoute un log (ou non, en fonction des paramètres de filtrage) aux structures de données du graphe.
+	// Contrat : le log doit être non null !
 	
 	multimap<int, string> get10best() const;
 	//Mde: renvoie une nouvelle multimap correspondant aux 10 ressources les plus consultées. Multimap = <nbHits, URL) 
@@ -69,8 +65,24 @@ private:			//Attributs privés
 	int t; 		//Entier correspondant à l'heure de filtrage, si elle est renseignée (-1 étant une valeur incorrecte)
 };
 
-bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2);
+bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2);  
+//Surcharge de l'opérateur > pour le type pair<int, int> : renvoie vrai si la seconde composante de
+// la première paire est plus grande que la seconde composante de la seconde paire
+
 bool operator >= (std::pair<int, int> & p1, std::pair<int, int> & p2);
+//Surcharge de l'opérateur > pour le type pair<int, int> : renvoie vrai si la seconde
+// composante de la première paire est plus grande ou égale à la seconde composante de la seconde paire
+
+
+struct Sup_pair_cmp {
+	bool operator () (std::pair<int, int>  p1, std::pair<int, int>  p2)
+	{
+		return (p1.second >= p2.second);
+	}  // ----- Fin de operator ()
+};	
+
+//Définition d'un foncteur permettant au set<pair<int, int>> de pouvoir établir une relation d'ordre entre ses éléments,
+// basée sur la seconde composante de la paire
 
 //-------------------------------- Autres définitions dépendantes de <GraphData>
 

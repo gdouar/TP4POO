@@ -21,15 +21,27 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
-
 //----------------------------------------------------- Méthodes publiques
+
+set<string> Log::ignored_extensions = {"jpeg", "png", "js", "css", "bmp", "gif", "ani", "cal",
+									   "fax", "img", "jbg", "jpe", "jpg", "mac", "pbm", "tga"};
+
+bool Log::CanBeIgnored() const 
+{
+	
+	std::string ext = cible.substr(cible.find_last_of(".")+1, cible.size()); 
+	return (ignored_extensions.find(ext) != ignored_extensions.end());
+	
+	
+} //---------- Fin de IsWebContentOrImage
+		
 
 Log::Log (string $ref, string $cible, string $heure, string $IP, 
 string $logname, string $username, string $date, string $diffGW, 
-string $method, int $status, int $dataSize, string $idClient):
+string $method, int $status, int $dataSize):
 ref($ref), cible($cible), heure($heure), IP($IP), logname($logname),
 username($username), date($date), diffGW($diffGW), method($method),
-status($status), dataSize($dataSize), idClient($idClient)
+status($status), dataSize($dataSize)
 {
 	#ifdef MAP
 		cout << "Appel au constructeur paramétré de <Log>" << endl;
@@ -39,7 +51,7 @@ status($status), dataSize($dataSize), idClient($idClient)
 Log::Log ()
 
 {
-	ref=cible=date=heure=IP=logname=username=diffGW=method=idClient="";
+	ref=cible=date=heure=IP=logname=username=diffGW=method="";
 	status=dataSize=0;
 	
 	#ifdef MAP
@@ -60,7 +72,7 @@ ostream & operator << (ostream & out, const Log & log)
 	out << stm.str() + "\n Data Size :";
 	stm.str(std::string());
 	stm << log.dataSize;
-	out << stm.str() + "\n Client ID : " + log.idClient;
+	out << stm.str();
 	
 	return out;
 } // Fin de operator <<

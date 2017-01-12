@@ -39,11 +39,20 @@ bool operator >= (std::pair<int, int> & p1, std::pair<int, int> & p2)
 
 void GraphData::addLog(Log * l)
 {
+/*	if(this->e && )
+	{
+		
+	}*/
+	
 	return;
 }
 
 multimap<int, string> GraphData::get10best() const
 {
+	
+	
+	
+	
 	multimap<int, string> m1;
 	return m1;
 }
@@ -54,9 +63,6 @@ GraphData::GraphData (bool $e, int $t) : e($e), t($t)
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;
 #endif
 } //----- Fin de GraphData
-
-
-
 
 //------------------------------------------------------------------ PRIVE
 

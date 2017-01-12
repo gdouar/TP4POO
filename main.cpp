@@ -6,7 +6,7 @@
 #include "LogDAO.h"
 #include "GraphDAO.h"
 #include "Log.h"
-
+/*
 //Affiche l'interface utilisateur
 int chargerIHM(int & argc, char* argv)
 {
@@ -70,10 +70,10 @@ int chargerIHM(int & argc, char* argv)
 
 	nomFichierLog = argv[argc-1];
 	return 0;
-}
+}*/
 
 //Test de la surcharge des opérateurs > et >= sur paire
-void testSurchargeOpInfPaire()
+void testSurchargeOpSupPaire()
 {
 	std::pair<int, int> p1 = make_pair(1,2);
 	std::pair<int, int> p2 = make_pair(2,1);
@@ -81,24 +81,82 @@ void testSurchargeOpInfPaire()
 	
 }
 
+// Fonction de test de l'utilisation d'un set ordonné par la relation > comportant des pair<int, int>
+// Requiert le foncteur Sup_pair_cmp défini dans GraphData.h
+void testSetPair()
+{
+	set<pair<int, int>, Sup_pair_cmp> s1;
+	s1.insert(make_pair(1, 4));
+	s1.insert(make_pair(0, 6));
+	
+	cout << s1.begin()->second << endl;
+		
+}
+
+
+//Lecture dans le fichier
+//Temps de lecture de 100 000 entrées = 5 secondes !
+void testChargementLogs()
+{
+	LogDAO ldao("anonyme.log");
+	Log* ld;
+	while((ld = ldao.GetNextLog())!=nullptr)
+	{
+		delete ld;
+	}
+}
+
+//Méthode de test de la reconnaissance du flag -e
+void testIgnoreExtension()
+{
+	Log* ld2 = new Log("ref", "/fradth.cs/index.html", "y", "h", "k", "j", "r", "e", "t", 3, 4);
+	cout << endl << ld2->CanBeIgnored();
+	delete ld2;
+	
+	ld2 = new Log("ref", "/fradth.cs/index.js", "y", "h", "k", "j", "r", "e", "t", 3, 4);
+	cout << endl << ld2->CanBeIgnored();
+	delete ld2;
+	
+	ld2= new Log("ref", "/fradth.cs/index.bmp", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
+	cout << endl << ld2->CanBeIgnored();
+	delete ld2;
+	
+	ld2= new Log("ref", "/fradth.cs/index.css", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
+	cout << endl << ld2->CanBeIgnored();
+	delete ld2;
+	
+	ld2= new Log("ref", "/fradth.cs/index.png", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
+	cout << endl << ld2->CanBeIgnored();
+	delete ld2;
+}
 
 //Affichage d'un log via operator << 
 void testAffichageLogs()
 {
-	LogDAO ldao("testlog.log");
-	Log* ld = ldao.getNextLog();
-	cout << (*ld);
+	LogDAO ldao("anonyme.log");
+	Log* ld = ldao.GetNextLog();
+	cout << *ld;
+	cout << endl << ld->CanBeIgnored();
 	delete ld;
+}
+
+//Fonction de test de l'injection des données dans la classe de structures optimisées  (WIP...)
+void testInitGraphData()
+{
 	
 }
 
 
-
-
+/*
+	Procédure principale, point d'entrée de l'application
+*/
 int main(int argc, char* argv[])
 {
+	//testIgnoreExtension();
+	//testChargementLog();
 	//testAffichageLogs();
-	//testSurchargeOpInfPaire();
-	return chargerIHM(argc, argv);
-
+	//testSurchargeOpSupPaire();
+	//return chargerIHM(argc, argv);
+	testSetPair();
+	return 0;
 }
