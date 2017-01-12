@@ -25,6 +25,7 @@ using namespace std;
 //
 //	Classe rassemblant les données d'une entrée de Log.
 //------------------------------------------------------------------------
+class GraphData;
 
 class Log
 {
@@ -33,6 +34,8 @@ class Log
 public:
 
 	friend ostream & operator << (ostream & out, const Log & log);
+
+	friend class GraphData;
 //----------------------------------------------------- Méthodes publiques
 
    Log (string $ref, string $cible, string $heure, string $IP, 

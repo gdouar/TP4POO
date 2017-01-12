@@ -24,6 +24,17 @@ using namespace std;
 
 //----------------------------------------------------------------- PUBLIC
 
+//---------------------------------------------- Surcharges des opérateurs
+
+bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2)
+{
+	return (p1.second > p2.second);
+}  // ----- Fin de operator >
+
+bool operator >= (std::pair<int, int> & p1, std::pair<int, int> & p2)
+{
+	return (p1.second >= p2.second);
+}  // ----- Fin de operator >=
 //----------------------------------------------------- Méthodes publiques
 
 void GraphData::addLog(Log * l)

@@ -1,9 +1,14 @@
-using namespace std;
 #include <iostream>
-#include <cstdlib>
 #include <string>
+#include <cstdlib>
+#include <cstring>
+#include "GraphData.h"
+#include "LogDAO.h"
+#include "GraphDAO.h"
+#include "Log.h"
 
-int main(int argc, char* argv[])
+//Affiche l'interface utilisateur
+int chargerIHM(int & argc, char* argv)
 {
 	bool enleverExtensions = false;
 	int heure;
@@ -64,6 +69,36 @@ int main(int argc, char* argv[])
 	}
 
 	nomFichierLog = argv[argc-1];
-
 	return 0;
+}
+
+//Test de la surcharge des opérateurs > et >= sur paire
+void testSurchargeOpInfPaire()
+{
+	std::pair<int, int> p1 = make_pair(1,2);
+	std::pair<int, int> p2 = make_pair(2,1);
+	cout << (p1 > p2) << endl << (p1 >= p2) << endl;
+	
+}
+
+
+//Affichage d'un log via operator << 
+void testAffichageLogs()
+{
+	LogDAO ldao("testlog.log");
+	Log* ld = ldao.getNextLog();
+	cout << (*ld);
+	delete ld;
+	
+}
+
+
+
+
+int main(int argc, char* argv[])
+{
+	//testAffichageLogs();
+	//testSurchargeOpInfPaire();
+	return chargerIHM(argc, argv);
+
 }
