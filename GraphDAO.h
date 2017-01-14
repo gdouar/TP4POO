@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 #include "GraphData.h"
 //------------------------------------------------------------- Constantes
 
@@ -37,8 +38,10 @@ public:
    GraphDAO(string $filename="");
     // Mode d'emploi : Constructeur par défaut de GraphDAO.
 	
-	void serialize(GraphData & gd);
-	//Sérialise les données contenues dans la classe GraphData au format GraphViz.
+	void serialize(list<pair<int, string>> & l);
+	//Sérialise les données de la liste passée en paramètre au format GraphViz.
+	//Cette liste contient au maximum 10 paires <URL, nbTotalHits> rangés suivant le nombre total de hits dans l'ordre décroissant.
+	
 
 //------------------------------------------------------------------ PRIVE
 

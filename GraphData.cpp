@@ -13,8 +13,8 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-#include <map>
 #include <unordered_map>
+#include <list>
 #include <string>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
@@ -47,14 +47,11 @@ void GraphData::addLog(Log * l)
 	return;
 }
 
-multimap<int, string> GraphData::get10best() const
+list<pair<int, string>> GraphData::get10best() const
 {
 	
-	
-	
-	
-	multimap<int, string> m1;
-	return m1;
+	list<pair<int, string>> l1;
+	return l1;
 }
 
 GraphData::GraphData (bool $e, int $t) : e($e), t($t)

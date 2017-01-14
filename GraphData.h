@@ -13,9 +13,9 @@
 //--------------------------------------------------- Interfaces utilisées
 using namespace std;
 #include <unordered_map>
-#include <map>
 #include <set>
 #include <string>
+#include <list>
 #include "Log.h"
 //------------------------------------------------------------- Constantes
 
@@ -38,8 +38,11 @@ public:
 	// Mde : ajoute un log (ou non, en fonction des paramètres de filtrage) aux structures de données du graphe.
 	// Contrat : le log doit être non null !
 	
-	multimap<int, string> get10best() const;
-	//Mde: renvoie une nouvelle multimap correspondant aux 10 ressources les plus consultées. Multimap = <nbHits, URL) 
+	list<pair<int, string>> get10best() const;
+	//Mde: renvoie une liste correspondant aux 10 ressources les plus consultées. 
+	//La liste comporte des éléments faisant correspondre une URL à un entier correspondant au nombre total de hits sur cette cible
+	//La liste est ordonnée en fonction de ce nombre total, du plus grand au plus petit.
+	//Elle comporte au maximum 10 éléments
 
     GraphData (bool $e = false, int $t=-1);
     // Mode d'emploi : Constructeur par défaut de GraphData

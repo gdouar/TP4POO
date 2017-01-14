@@ -15,6 +15,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <list>
 //------------------------------------------------------ Include personnel
 #include "GraphData.h"
 #include "GraphDAO.h"
@@ -25,7 +26,7 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void serialize(GraphData & gd)
+void serialize(list<pair<int, string>> & l)
 {
 	return;
 }//------ Fin de serialize
