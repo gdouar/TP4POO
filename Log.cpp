@@ -25,7 +25,17 @@ using namespace std;
 
 set<string> Log::ignored_extensions = {"jpeg", "png", "js", "css", "bmp", "gif", "ani", "cal",
 									   "fax", "img", "jbg", "jpe", "jpg", "mac", "pbm", "tga"};
+								
+									   
+bool Log::IsInInterval(const unsigned int h) const
+{
+	unsigned int hLog;
+	istringstream (heure.substr(0, 2)) >> hLog;
+	return hLog==h;
+	
+}// -------- Fin de IsInInterval
 
+									  
 bool Log::CanBeIgnored() const 
 {
 	
@@ -38,11 +48,28 @@ bool Log::CanBeIgnored() const
 
 Log::Log (string $ref, string $cible, string $heure, string $IP, 
 string $logname, string $username, string $date, string $diffGW, 
-string $method, int $status, int $dataSize):
-ref($ref), cible($cible), heure($heure), IP($IP), logname($logname),
+string $method, unsigned int $status, unsigned int $dataSize):
+heure($heure), IP($IP), logname($logname),
 username($username), date($date), diffGW($diffGW), method($method),
 status($status), dataSize($dataSize)
 {
+	
+	if($ref.find("http://intranet-if.insa-lyon.fr")!=string::npos)
+	{
+		ref = $ref.substr(31, $ref.size());
+	}
+	else {
+		string sansProtocole = $ref.substr($ref.find("//")+2, $ref.size());
+		ref = sansProtocole.substr(0, sansProtocole.find("/"));
+	}
+	cible = $cible;
+	unsigned int positionParams=$cible.find("?");
+	if(positionParams!=string::npos)
+	{
+		cible = cible.substr(0, positionParams);
+	}
+	cible = (cible.back() == '/') ? cible.substr(0, cible.size()-1) : cible;
+	
 	#ifdef MAP
 		cout << "Appel au constructeur paramétré de <Log>" << endl;
 	#endif
@@ -60,6 +87,12 @@ Log::Log ()
 
 } //----- Fin de Log
 
+Log::~Log()
+{
+	#ifdef MAP
+		cout << "Appel au destructeur de <Log>" << endl;
+	#endif
+}
 
 ostream & operator << (ostream & out, const Log & log)
 {

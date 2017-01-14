@@ -85,11 +85,11 @@ void testSurchargeOpSupPaire()
 // Requiert le foncteur Sup_pair_cmp défini dans GraphData.h
 void testSetPair()
 {
-	set<pair<int, int>, Sup_pair_cmp> s1;
+	/*set<pair<int, int>, Sup_pair_cmp> s1;
 	s1.insert(make_pair(1, 4));
 	s1.insert(make_pair(0, 6));
 	
-	cout << s1.begin()->second << endl;
+	cout << s1.begin()->second << endl;*/
 		
 }
 
@@ -130,21 +130,83 @@ void testIgnoreExtension()
 	delete ld2;
 }
 
-//Affichage d'un log via operator << 
+//Fonction de test de la méthode IsInInterval de la classe Log
+void testComprisHoraire()
+{
+	LogDAO ldao("anonyme.log");
+	Log* ld;
+	for(int i = 0;i<3;i++)
+	{
+		 ld=ldao.GetNextLog();
+		cout << *ld;
+		cout << endl << ld->IsInInterval(11) << endl;
+		delete ld;
+	}
+
+}
+
+//Tests affichage d'un log via operator << 
+//Tests formatage des cibles et des referers
 void testAffichageLogs()
 {
 	LogDAO ldao("anonyme.log");
 	Log* ld = ldao.GetNextLog();
 	cout << *ld;
-	cout << endl << ld->CanBeIgnored();
+	//cout << endl << ld->CanBeIgnored()<< endl ;
 	delete ld;
+	
+	ld = ldao.GetNextLog();
+	cout << *ld;
+	//cout << endl << ld->CanBeIgnored()<< endl ;
+	delete ld;
+	
+	ld = new Log("http://tt-rss.org/", "/SiteWebIF/Intranet-etudiant.php", "11:45:21", "127.0.0.1", "-", "-",
+				"08/Sep/2012", "+0200", "GET", 200, 12601);
+	cout << *ld;
+	//cout << endl << ld->CanBeIgnored()<< endl ;
+	delete ld;
+	
+	ld = new Log("http://tt-rss.org/", "/SiteWebIF/Intranet-etudiant.php?ticket=ST-341667-KHlNEzic9e5btb4JQ1Nw-dsi-vm03", "11:45:21", "127.0.0.1", "-", "-",
+		"08/Sep/2012", "+0200", "GET", 200, 12601);
+	cout << *ld;
+	delete ld;
+	
 }
+
+
 
 //Fonction de test de l'injection des données dans la classe de structures optimisées  (WIP...)
 void testInitGraphData()
 {
+	LogDAO ldao("anonyme.log");
+	GraphData gData;
+	Log* log = nullptr;
+	for(int i=0; i<2; i++)
+	{
+		log = ldao.GetNextLog();
+		cout << *(log);
+		gData.AddLog(log);
+	}
+	log = new Log("http://intranet-if.insa-lyon.fr/temps/4IF20.html", "/temps/4IF17.html", "11:45:21", "127.0.0.1", "-", "-",
+		"08/Sep/2012", "+0200", "GET", 200, 12601);
+	cout << *(log);
+	gData.AddLog(log);
+
+	
+	log = new Log("http://intranet-if.insa-lyon.fr/temps/4IF20.html", "/temps/4IF17.html", "11:45:21", "127.0.0.1", "-", "-",
+		"08/Sep/2012", "+0200", "GET", 200, 12601);
+	cout << *(log);
+	gData.AddLog(log);
+	
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << endl << "URL : " << (*it).second << " - Nb hits : " << (*it).first << endl;
+	}
 	
 }
+
+
 
 
 /*
@@ -155,8 +217,11 @@ int main(int argc, char* argv[])
 	//testIgnoreExtension();
 	//testChargementLog();
 	//testAffichageLogs();
-	//testSurchargeOpSupPaire();
+	//testSurchargeOpPaire();
 	//return chargerIHM(argc, argv);
-	testSetPair();
+	//testSetPair();
+	//testComprisHoraire();
+	 testInitGraphData();
+
 	return 0;
 }

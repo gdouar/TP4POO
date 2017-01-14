@@ -41,15 +41,19 @@ public:
 	bool CanBeIgnored() const; 
 	//Méthode renvoyant vrai si le log ne doit pas être considéré par le flag -e
 
+	bool IsInInterval(const unsigned int heure) const;
+	//Méthode renvoyant vrai si le log est situé dans la tranche horaire [heure, heure+1[
+	
    Log (string $ref, string $cible, string $heure, string $IP, 
    string $logname, string $username, string $date, string $diffGW, 
-	string $method, int $status, int $dataSize);
+	string $method, unsigned int $status, unsigned int $dataSize);
     // Mode d'emploi : Constructeur paramétré de Log.
    
    Log();
     // Mode d'emploi : Constructeur par défaut de Log.
 	
-
+	virtual ~Log();
+	//Destructeur de Log(inutile mais permet le tracage des destructeurs)
 //------------------------------------------------------------------ PRIVE
 
 protected:
@@ -69,8 +73,8 @@ private:			//Attributs privés
 	string date;				//Date de l'entrée de log
 	string diffGW; 				//Différence Greenwich de l'entrée de log
 	string method; 				//Méthode HTTP utilisée de l'entrée de log
-	int status;					//Statut de la réponse HTTP de l'entrée de log
-	int dataSize;				//Taille en octets de la réponse comprise dans l'entrée de log
+	unsigned int status;					//Statut de la réponse HTTP de l'entrée de log
+	unsigned int dataSize;				//Taille en octets de la réponse comprise dans l'entrée de log
 	
 };
 
