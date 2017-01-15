@@ -50,7 +50,6 @@ Log* LogDAO::GetNextLog()
 				words[4] = words[4].substr(0, words[4].size()-1);	//Différence Greenwich
 				words[5].erase(0, 1);		//Méthode HTTP
 				words[10] = words[10].substr(1, words[10].size()-2);		//Referer
-				
 				int status;
 				int datasize;
 				

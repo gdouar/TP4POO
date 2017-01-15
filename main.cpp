@@ -198,6 +198,7 @@ void testInitGraphData()
 	cout << *(log);
 	gData.AddLog(log);
 	
+	
 	list<pair<int, string>> results = gData.get10best();  
 	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
 	{
@@ -207,6 +208,25 @@ void testInitGraphData()
 }
 
 
+//Test de l'injection des données dans la structure optimisée depuis un fichier de log
+void testInitGraphData2()
+{
+	LogDAO ldao("anonyme.log");
+	GraphData gData;
+	Log* log = nullptr;
+	for(int i=0; i<17; i++)
+	{
+		log = ldao.GetNextLog();
+		cout << *(log);
+		gData.AddLog(log);
+	}
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << endl << "URL : " << (*it).second << " - Nb hits : " << (*it).first << endl;
+	}
+	
+}
 
 
 /*
@@ -222,6 +242,7 @@ int main(int argc, char* argv[])
 	//testSetPair();
 	//testComprisHoraire();
 	 testInitGraphData();
+	// testInitGraphData2();
 
 	return 0;
 }

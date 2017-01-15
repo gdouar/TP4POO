@@ -49,19 +49,24 @@ bool Log::CanBeIgnored() const
 Log::Log (string $ref, string $cible, string $heure, string $IP, 
 string $logname, string $username, string $date, string $diffGW, 
 string $method, unsigned int $status, unsigned int $dataSize):
-heure($heure), IP($IP), logname($logname),
+ref($ref), heure($heure), IP($IP), logname($logname),
 username($username), date($date), diffGW($diffGW), method($method),
 status($status), dataSize($dataSize)
 {
-	
-	if($ref.find("http://intranet-if.insa-lyon.fr")!=string::npos)
+	if($ref != "-")
 	{
-		ref = $ref.substr(31, $ref.size());
+		if($ref.find("http://intranet-if.insa-lyon.fr")!=string::npos)
+		{
+			ref = $ref.substr(31, $ref.size());
+		}
+		else
+		{
+			string sansProtocole = $ref.substr($ref.find("//")+2, $ref.size());
+			ref = sansProtocole.substr(0, sansProtocole.find("/"));
+		}
+		ref = (ref.back() == '/') ? ref.substr(0, ref.size()-1) : ref;
 	}
-	else {
-		string sansProtocole = $ref.substr($ref.find("//")+2, $ref.size());
-		ref = sansProtocole.substr(0, sansProtocole.find("/"));
-	}
+	
 	cible = $cible;
 	unsigned int positionParams=$cible.find("?");
 	if(positionParams!=string::npos)

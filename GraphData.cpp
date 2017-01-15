@@ -33,7 +33,7 @@ bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2)
 
 bool operator < (std::pair<int, int> & p1, std::pair<int, int> & p2)
 {
-	return (p1.second > p2.second);
+	return (p1.second < p2.second);
 }  // ----- Fin de operator >
 
 
@@ -87,9 +87,9 @@ void GraphData::AddLog(Log * l)
 		}
 		((*it).second).second++;				//Dans tous les cas, le nombre total de hits est incrémenté.
 		
-		urlAndHits.erase(make_pair(idCible, previousHits));
+		urlAndHits.erase(make_pair(previousHits, idCible));
 									//On modifie la correspondance dans le set ordonné de paires <id, nbTotalHits>
-		urlAndHits.insert(make_pair(idCible, ++previousHits));
+		urlAndHits.insert(make_pair(++previousHits, idCible));
 	}
 	else {
 		// cout << "Cible spécifique insérée";
@@ -97,7 +97,7 @@ void GraphData::AddLog(Log * l)
 		m.insert(make_pair(idReferer, 1));		//Définition de la map (premier élément de la paire de id2Referers)
 		id2Referers.insert(make_pair(idCible, make_pair(m, 1)));		//Ajout d'une nouvelle entrée à id2Referers. Le nombre total de hits est de 1.
 																	//Le nombre de hits total est forcément de 1 pour la nouvelle cible
-		urlAndHits.insert(make_pair(idCible, 1));
+		urlAndHits.insert(make_pair(1, idCible));
 	}
 	
 	delete l;
@@ -106,16 +106,22 @@ void GraphData::AddLog(Log * l)
 
 list<pair<int, string>> GraphData::get10best()
 {
-
+	
+	
+/*	for(unordered_map<int, string>::iterator it =id2Url.begin();it!=id2Url.end();++it)
+	{
+		cout << endl << (*it).first << " : " << (*it).second << endl;
+	}*/
+	cout << "size : " << urlAndHits.size();
 	list<pair<int, string>> l1; 
 	int cpt=0;
-	for(set <pair<int, int>>::iterator it=urlAndHits.begin();it!=urlAndHits.end() && cpt<=10;++it, ++cpt)
+	for(set <pair<int, int>>::iterator it=urlAndHits.begin();it!=urlAndHits.end() && cpt < 10;++it, ++cpt)
 	{
 		
-		int idURL = (*it).first;
+		int idURL = (*it).second;
 		string url = (*(id2Url.find(idURL))).second;
-		l1.push_back(make_pair((*it).second, url)); 
-		cout << (*it).first << " - " << (*it).second << endl;
+		l1.push_back(make_pair((*it).first, url)); 
+		cout << endl <<  (*it).first << " - " << (*it).second << endl;
 	}
 	return l1;
 }  // ------------------ Fin de get10best
