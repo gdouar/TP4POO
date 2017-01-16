@@ -40,7 +40,7 @@ public:
 	
 	void serialize(list<pair<int, string>> & l);
 	//Sérialise les données de la liste passée en paramètre au format GraphViz.
-	//Cette liste contient au maximum 10 paires <URL, nbTotalHits> rangés suivant le nombre total de hits dans l'ordre décroissant.
+	//Cette liste contient au maximum 10 paires <URL, nbTotalHits> rangées suivant le nombre total de hits dans l'ordre décroissant.
 	
 
 //------------------------------------------------------------------ PRIVE

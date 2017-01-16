@@ -214,10 +214,10 @@ void testInitGraphData2()
 	LogDAO ldao("anonyme.log");
 	GraphData gData;
 	Log* log = nullptr;
-	for(int i=0; i<17; i++)
+	for(int i=0; i<400; i++)
 	{
 		log = ldao.GetNextLog();
-		cout << *(log);
+	//	cout << *(log);
 		gData.AddLog(log);
 	}
 	list<pair<int, string>> results = gData.get10best();  
@@ -241,8 +241,8 @@ int main(int argc, char* argv[])
 	//return chargerIHM(argc, argv);
 	//testSetPair();
 	//testComprisHoraire();
-	 testInitGraphData();
-	// testInitGraphData2();
+	// testInitGraphData();
+	 testInitGraphData2();
 
 	return 0;
 }

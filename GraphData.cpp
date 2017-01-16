@@ -134,6 +134,7 @@ GraphData::GraphData (bool $e, unsigned int $t) : ignoreExtensions($e), time($t)
 #endif
 } //----- Fin de GraphData
 
+
 void GraphData::GenerateGraphViz(string nomFichier)
 {
 	//si 0 noeuds, afficher msg erreur
@@ -189,6 +190,7 @@ void GraphData::GenerateGraphViz(string nomFichier)
 	return;
 
 } // ----- Fin de GenerateGraphViz
+
 
 //------------------------------------------------------------------ PRIVE
 
