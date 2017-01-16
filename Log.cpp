@@ -24,7 +24,7 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 set<string> Log::ignored_extensions = {"jpeg", "png", "js", "css", "bmp", "gif", "ani", "cal",
-									   "fax", "img", "jbg", "jpe", "jpg", "mac", "pbm", "tga"};
+									   "fax", "img", "jbg", "jpe", "jpg", "mac", "pbm", "tga", "ico"};
 								
 									   
 bool Log::IsInInterval(const unsigned int h) const
@@ -75,6 +75,7 @@ status($status), dataSize($dataSize)
 	}
 	cible = (cible.back() == '/') ? cible.substr(0, cible.size()-1) : cible;
 	
+	
 	#ifdef MAP
 		cout << "Appel au constructeur paramétré de <Log>" << endl;
 	#endif
@@ -103,7 +104,7 @@ ostream & operator << (ostream & out, const Log & log)
 {
 	std::ostringstream stm;
 	
-	out << "*** LOG *** \n Referer: " + log.ref + "\n Cible : " + log.cible + "\n Date : " + log.date 
+	out << endl << "*** LOG *** \n Referer: " + log.ref + "\n Cible : " + log.cible + "\n Date : " + log.date 
 	+ "\n Heure : " + log.heure+"\n IP : " + log.IP + "\n Logname : " + log.logname + "\n Username : " + log.username
 	+ "\n Greenwich diff :" + log.diffGW + "\n Method : " + log.method + "\n Status : ";
 	stm << log.status;

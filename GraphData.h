@@ -53,7 +53,7 @@ public:
 	//La liste est ordonnée en fonction de ce nombre total, du plus grand au plus petit.
 	//Elle comporte au maximum 10 éléments
 
-    GraphData (bool $e = false, unsigned int $t=-1);
+    GraphData (bool $e = false, int $t=-1);
     // Mode d'emploi : Constructeur par défaut de GraphData
 
 	
@@ -80,7 +80,7 @@ private:			//Attributs et fonctions privés
 			//  => TODO : surcharge des opérateurs > / >= sur le set <int, int> => permet de ranger la collection selon la valeur du 2ème élément (nombre de hits)
 	
 	bool ignoreExtensions;		//Booléen passant à vrai si on souhaite éviter les JS/CSS/Images
-	unsigned int time; 		//Entier correspondant à l'heure de filtrage, si elle est renseignée (-1 étant une valeur incorrecte)
+	int time; 		//Entier correspondant à l'heure de filtrage, si elle est renseignée (-1 étant une valeur incorrecte)
 };
 
 

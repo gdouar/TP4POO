@@ -228,6 +228,63 @@ void testInitGraphData2()
 	
 }
 
+//Test du filtrage des cibles en fonction de l'horaire fournie (ici 11h)
+void testInitGraphDataFiltrageHoraire()
+{
+	LogDAO ldao("anonyme.log");
+	GraphData gData(false, 11);
+	Log* log = nullptr;
+	for(int i=0; i<400; i++)
+	{
+		log = ldao.GetNextLog();
+		gData.AddLog(log);			
+	}
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << endl << "URL : " << (*it).second << " - Nb hits : " << (*it).first << endl;
+	}
+	
+}
+
+
+//Test du filtrage des cibles en fonction du flag -e
+void testInitGraphDataFiltrageExtension()
+{
+	LogDAO ldao("anonyme.log");
+	GraphData gData(true);
+	Log* log = nullptr;
+	for(int i=0; i<400; i++)
+	{
+		log = ldao.GetNextLog();
+		gData.AddLog(log);			
+	}
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << endl << "URL : " << (*it).second << " - Nb hits : " << (*it).first << endl;
+	}
+	
+}
+
+//Test du filtrage des cibles en fonction des deux options de filtrage simultanées (filtrage des extensions des cibles consultées à 11hXX)
+void testInitGraphDataFiltrageBoth()
+{
+	LogDAO ldao("filterFile.log");
+	GraphData gData(true, 11);
+	Log* log=nullptr;
+	while((log = ldao.GetNextLog())!=nullptr)
+	{
+		gData.AddLog(log);			
+	}
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << endl << "URL : " << (*it).second << " - Nb hits : " << (*it).first << endl;
+	}
+	
+}
+
 
 /*
 	Procédure principale, point d'entrée de l'application
@@ -242,7 +299,9 @@ int main(int argc, char* argv[])
 	//testSetPair();
 	//testComprisHoraire();
 	// testInitGraphData();
-	 testInitGraphData2();
-
+	// testInitGraphData2();
+	//testInitGraphDataFiltrageHoraire();
+	//testInitGraphDataFiltrageExtension();
+	testInitGraphDataFiltrageBoth();
 	return 0;
 }

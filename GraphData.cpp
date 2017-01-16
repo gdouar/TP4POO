@@ -51,6 +51,12 @@ void GraphData::AddLog(Log * l)
 //associé à la ligne de log, ainsi que le nombre total de hits de la cible. Enfin, on insère ou modifie une entrée dans le set ordonné de paires
 // <idCible, nbTotalHits> urlAndHits pour maintenir la cohérence entre les deux structures de données.
 
+	if(((ignoreExtensions && l->CanBeIgnored()) || ((time != -1) && !l->IsInInterval(time))))		//Filtrage des logs
+	{
+		delete l;
+		return;
+	}
+
 	string cible = l->cible;
 	// cout << endl << "Cible = " << cible << endl;
 	int idCible;
@@ -100,7 +106,7 @@ void GraphData::AddLog(Log * l)
 																	//Le nombre de hits total est forcément de 1 pour la nouvelle cible
 		urlAndHits.insert(make_pair(1, idCible));
 	}
-	
+	//cout << (*l);
 	delete l;
 	return;
 }
@@ -127,7 +133,7 @@ list<pair<int, string>> GraphData::get10best()
 	return l1;
 }  // ------------------ Fin de get10best
 
-GraphData::GraphData (bool $e, unsigned int $t) : ignoreExtensions($e), time($t)
+GraphData::GraphData (bool $e, int $t) : ignoreExtensions($e), time($t)
 {
 #ifdef MAP
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;
