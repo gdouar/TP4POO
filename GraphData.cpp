@@ -16,11 +16,11 @@ using namespace std;
 #include <unordered_map>
 #include <list>
 #include <string>
-#include <fstream>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 #include "GraphData.h"
 #include "LogsChecker.h"
+#include "GraphDAO.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -135,6 +135,13 @@ GraphData::GraphData (bool $e, int $t) : ignoreExtensions($e), time($t)
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;
 #endif
 } //----- Fin de GraphData
+
+void GraphData::GenerateGraphViz(string nomFichier)
+{
+	GraphDAO * gDao = new GraphDAO(nomFichier);
+	gDao->serialize(id2Url, id2Referers);
+
+} //------ Fin de GenerateGraphViz
 
 //------------------------------------------------------------------ PRIVE
 

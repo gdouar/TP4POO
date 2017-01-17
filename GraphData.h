@@ -55,6 +55,9 @@ public:
 
     GraphData (bool $e = false, int $t=-1);
     // Mode d'emploi : Constructeur par défaut de GraphData
+
+    void GenerateGraphViz(string nomFichier);
+    // Mode d'emploi : génère le fichier au format GraphViz
 	
 
 //------------------------------------------------------------------ PRIVE

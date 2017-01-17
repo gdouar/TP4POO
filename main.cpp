@@ -12,6 +12,7 @@
 int interpreterCmde(int & argc, char* argv[])
 {
 	bool enleverExtensions = false;
+	bool genererGraphe = false;
 	int heure=-1;
 	string nomFichierGraph;
 
@@ -54,6 +55,7 @@ int interpreterCmde(int & argc, char* argv[])
 		{
 			if(i+1 < argc-1)
 			{
+				genererGraphe = true;
 				nomFichierGraph = argv[i+1];
 				cout << endl << "Génération de graphe dans le fichier : " << nomFichierGraph  << endl; 
 				i++;
