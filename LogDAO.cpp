@@ -67,7 +67,7 @@ Log* LogDAO::GetNextLog()
 
 bool LogDAO::IsReady()
 {
-	return is;
+	return !is.fail();
 } // ---- Fin de IsReady
 
 LogDAO::LogDAO (string $filename) : filename($filename)
