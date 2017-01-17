@@ -1,1 +1,1 @@
-echo "yop !"
+../../analog -t 11 ../filterFile.log
