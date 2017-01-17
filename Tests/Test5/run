@@ -1,1 +1,1 @@
-cat 
+../../analog -t 28 -e ../filterFile.log
