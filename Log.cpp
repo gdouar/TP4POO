@@ -17,7 +17,6 @@ using namespace std;
 #include <sstream>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
-
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -90,24 +89,23 @@ status($status), dataSize($dataSize)
 {
 	if($ref != "-")
 	{
-		if($ref.find(localhost)!=string::npos)
+		ref = $ref;
+		ref = eraseBeforeChar(ref, "?");		//On enlève les paramètres de l'URL du referer
+		ref = eraseBeforeChar(ref, ";");
+		if(ref.find(localhost)!=string::npos)		//Si c'est un referer local, on enlève le localhost
 		{
-			ref = $ref.substr(31, $ref.size());
+			ref = ref.substr(31, $ref.size());
 		}
 		else
 		{
-			string sansProtocole = $ref.substr($ref.find("//")+2, $ref.size());
+			string sansProtocole = ref.substr(ref.find("//")+2, ref.size());	//Si c'est un referer externe, on ne garde que son nom de domaine
 			ref = sansProtocole.substr(0, sansProtocole.find("/"));
 		}
-		ref = (ref.back() == '/') ? ref.substr(0, ref.size()-1) : ref;
+		ref = (ref.back() == '/') ? ref.substr(0, ref.size()-1) : ref;		//On enlève les éventuels / de fin de l'URL du referer
 	}
 	
 	cible = $cible;
-	unsigned int positionParams=$cible.find("?");
-	if(positionParams!=string::npos)
-	{
-		cible = cible.substr(0, positionParams);
-	}
+	cible = eraseBeforeChar(cible, "?"); 
 	cible = (cible.back() == '/') ? cible.substr(0, cible.size()-1) : cible;
 	
 	
@@ -152,6 +150,17 @@ ostream & operator << (ostream & out, const Log & log)
 } // Fin de operator <<
 
 //------------------------------------------------------------------ PRIVE
+
+string Log::eraseBeforeChar(string toReturn, string s) const
+{
+  unsigned int posChar = toReturn.find(s);
+	if(posChar!=string::npos)		//On enlève les paramètres de l'URL du referer
+	{
+		toReturn = toReturn.substr(0, posChar);
+	}	
+	return toReturn;
+}
+
 
 //----------------------------------------------------- Méthodes protégées
 

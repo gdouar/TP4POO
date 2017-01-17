@@ -81,6 +81,9 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 private:			//Attributs privés
+
+	string eraseBeforeChar(string toReturn, string s) const;
+								// Fonction supprimant une partie de la chaîne passée en paramètre jusqu'au caractère spécifié
 	
 	string ref;					//Referer de l'entrée de log
 	string cible;				//Cible de l'entrée de log (ressource HTTP de la requête cliente)

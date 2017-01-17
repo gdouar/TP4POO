@@ -60,7 +60,7 @@ public:
 
 		if(is_read.is_open() && is_read)
 		{
-			cout << "Le fichier existe déjà." << endl;
+			cout << "Warning : Le fichier existe déjà." << endl;
 			cout << "L'écraser (y/n) ?" << endl;
 			char str;
 			cin >> str;
@@ -78,7 +78,7 @@ public:
 		//check si le fichier ouvert en écriture
 		if(!os)
 		{
-			cerr << "Fichier non ouvert en écriture" << endl;
+			cerr << "Erreur : Fichier non ouvert en écriture" << endl;
 			os.close();
 			return;
 		}

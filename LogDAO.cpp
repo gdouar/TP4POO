@@ -65,12 +65,17 @@ Log* LogDAO::GetNextLog()
 
 }//----- Fin de getNextLog
 
+bool LogDAO::IsReady()
+{
+	return is;
+} // ---- Fin de IsReady
+
 LogDAO::LogDAO (string $filename) : filename($filename)
 {
 	
 	is.open(filename);
 	if (!is.is_open())
-		cout << "Erreur à l'ouverture du fichier";
+		cerr << "Erreur à l'ouverture du fichier" << endl;
 	
 	#ifdef MAP
 		cout << "Appel au constructeur paramétré de <LogDAO>" << endl;

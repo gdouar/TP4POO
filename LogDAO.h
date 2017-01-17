@@ -40,7 +40,9 @@ public:
 	
 	Log* GetNextLog();
 	//Méthode renvoyant un nouvel objet LOG (dont les données sont envoyées par le main à la classe GraphData) à partir d'une ligne de fichier
-
+	
+	bool IsReady();
+	//Méthode renvoyant vrai si le flux d'entrée a été ouvert sans erreur
 	
 //------------------------------------------------------------------ PRIVE
 

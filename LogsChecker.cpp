@@ -30,7 +30,7 @@ bool LogsChecker::IsInInterval(Log * l, const unsigned int h)
 {
 	unsigned int hLog;
 	istringstream ((l->GetHeure()).substr(0, 2)) >> hLog;
-	return hLog==h;
+	return (hLog==h);
 	
 }// -------- Fin de IsInInterval
 

@@ -22,15 +22,12 @@ int interpreterCmde(int & argc, char* argv[])
 		cerr << "Usage: " << argv[0] << " [options] nomfichier.log" << endl;
 		return 1;
 	}
-
-
+	
 	for(int i=1; i< argc-1; i++)
 	{
-		
 		if(strcmp(argv[i], "-e") == 0)
 		{
 			enleverExtensions = true;
-			cout << endl << "Warning : Images, CSS et Javascript ignorés." << endl;
 		}
 		else if(strcmp(argv[i], "-t") == 0)
 		{
@@ -43,7 +40,6 @@ int interpreterCmde(int & argc, char* argv[])
 					return 1;
 				}
 				i++;
-				cout << "Warning : Logs compris entre "<< heure << "h et " << heure+1 << "h seulement pris en compte."<<endl;
 			}
 			else
 			{
@@ -57,7 +53,7 @@ int interpreterCmde(int & argc, char* argv[])
 			{
 				genererGraphe = true;
 				nomFichierGraph = argv[i+1];
-				cout << endl << "Génération de graphe dans le fichier : " << nomFichierGraph  << endl; 
+
 				i++;
 			}
 			else
@@ -69,35 +65,47 @@ int interpreterCmde(int & argc, char* argv[])
 		
 		else
 		{
-			cerr << "Warning : paramètre inconnu non pris en compte : " << argv[i] << endl;
+			cout << "Warning : paramètre inconnu non pris en compte : " << argv[i] << endl;
 		}
 	}
 
+	if(enleverExtensions)
+	{
+		cout << endl << "Warning : Images, CSS et Javascript ignorés." << endl;
+	}
+	
+	if(heure != -1)
+	{
+		cout << "Warning : Logs compris entre "<< heure << "h et " << heure+1 << "h seulement pris en compte."<<endl;
+	}
 
 	string nomFichierLog(argv[argc-1]);
 	if(!(nomFichierLog.substr(0,1)).compare("-"))
 	{
-		cerr << "Warning : paramètre inconnu non pris en compte : " << argv[argc-1] << endl;
+		cerr << "Erreur : le dernier paramètre doit être le nom de fichier " << endl;
 		return 1;
 	}
 	GraphData gData(enleverExtensions, heure);
 
 	LogDAO ldao(nomFichierLog);
-	Log* ld;
-	while((ld = ldao.GetNextLog())!=nullptr)
+	if(ldao.IsReady())
 	{
-		gData.AddLog(ld);
+		Log* ld;
+		while((ld = ldao.GetNextLog())!=nullptr)
+		{
+			gData.AddLog(ld);
+		}
+		if(genererGraphe)
+		{
+			cout << endl << "Génération de graphe dans le fichier : " << nomFichierGraph  << endl; 
+			gData.GenerateGraphViz(nomFichierGraph);
+		}
+		list<pair<int, string>> results = gData.get10best();  
+		for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+		{
+			cout << (*it).second << " (" << (*it).first << " hit" << (((*it).first >1) ? "s":"") << ")" <<endl;
+		}
 	}
-	if(genererGraphe)
-	{
-		gData.GenerateGraphViz(nomFichierGraph);
-	}
-	list<pair<int, string>> results = gData.get10best();  
-	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
-	{
-		cout << (*it).second << " (" << (*it).first << " hit" << (((*it).first >1) ? "s":"") << ")" <<endl;
-	}
-	
 	return 0;
 
 }
