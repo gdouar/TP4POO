@@ -7,28 +7,33 @@
 #include "GraphDAO.h"
 #include "Log.h"
 #include "LogsChecker.h"
-/*
-//Affiche l'interface utilisateur
-int chargerIHM(int & argc, char* argv)
+
+//Interprète les commandes de l'utilisateur
+int interpreterCmde(int & argc, char** argv)
 {
 	bool enleverExtensions = false;
 	int heure;
 	string nomFichierGraph;
 	string nomFichierLog;
 
-	if(argc < 2)
+	cout << "argc : " << argc << endl;
+
+	if(argc < 2 )
 	{
+		cerr << endl << "Commande incorrecte : " << endl;
 		cerr << "Usage: " << argv[0] << " [options] nomfichier.log" << endl;
 		return 1;
 	}
+	
 
 	for(int i=1; i< argc-1; i++)
 	{
-		//cout << argv[i] << endl;
+		cout << "loop" << endl;
+		cout << argv[i] << endl;
 		if(strcmp(argv[i], "-e") == 0)
 		{
 			enleverExtensions = true;
-			cout << "Images, CSS et Javascript files ignorés." << endl;
+			cout << endl << "Warning : Images, CSS et Javascript ignorés." << endl;
 		}
 		else if(strcmp(argv[i], "-t") == 0)
 		{
@@ -37,24 +42,24 @@ int chargerIHM(int & argc, char* argv)
 				heure = atoi(argv[i+1]);
 				if(heure < 0 || heure > 23)
 				{
-					cerr << "Heure doit être compris entre 0 et 23." << endl;
+					cerr << endl << "Erreur : l'heure doit être comprise entre 0 et 23." << endl;				
 					return 1;
 				}
 				i++;
-				cout << "Heure comprise entre "<< heure << "h et " << heure+1 << "h."<<endl;
+				cout << "Warning : Logs compris entre "<< heure << "h et " << heure+1 << "h seulement pris en compte."<<endl;
 			}
 			else
 			{
-				cerr << "-t nécessite un paramètre supplémentaire (heure)" << endl;
+				cerr << endl <<  "Erreur : -t nécessite un paramètre supplémentaire (heure)" << endl;
 				return 1;
-			}
-			
+			}	
 		}
 		else if(strcmp(argv[i], "-g") == 0)
 		{
 			if(i+1 < argc-1)
 			{
 				nomFichierGraph = argv[i+1];
+				cout << endl << "Génération de graphe dans le fichier : " << nomFichierGraph  << endl; 
 				i++;
 			}
 			else
@@ -63,15 +68,22 @@ int chargerIHM(int & argc, char* argv)
 				return 1;
 			}
 		}
+		
 		else
 		{
-			cerr << "Paramètre inconnu : " << argv[i] << endl;
+			cerr << "Warning : paramètre inconnu non pris en compte : " << argv[i] << endl;
 		}
 	}
-
+	string s(argv[argc-1]);
+	if(!(s.substr(0,1)).compare("-"))
+	{
+		cerr << "Warning : paramètre inconnu non pris en compte : " << argv[argc-1] << endl;
+		return 1;
+	}
 	nomFichierLog = argv[argc-1];
 	return 0;
-}*/
+
+}
 
 //Test de la surcharge des opérateurs > et >= sur paire
 void testSurchargeOpSupPaire()
@@ -303,6 +315,6 @@ int main(int argc, char* argv[])
 	// testInitGraphData2();
 	//testInitGraphDataFiltrageHoraire();
 	//testInitGraphDataFiltrageExtension();
-	testInitGraphDataFiltrageBoth();
-	return 0;
+	//testInitGraphDataFiltrageBoth();
+	return interpreterCmde(argc, argv);
 }
