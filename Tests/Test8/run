@@ -1,1 +1,1 @@
-../../analog ../filterFile.log > out.txt
+../../analog -h -W test.dot -t
