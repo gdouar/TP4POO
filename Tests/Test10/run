@@ -1,1 +1,1 @@
-../../analog ../filterFile.log > out.txt
+../../analog -e -g forbidden.log ../filterFile.log
