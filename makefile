@@ -1,6 +1,6 @@
 OBJ= main.o GraphData.o Log.o LogDAO.o GraphDAO.o LogsChecker.o
 COMP=g++
-COMPFLAG = -Wall -std=c++11 
+COMPFLAG = -Wall -std=c++11
 
 analog: $(OBJ)
 	$(COMP) $(COMPFLAG) -o analog $(OBJ)
@@ -16,4 +16,5 @@ LogDAO.o: LogDAO.h LogDAO.cpp Log.h
 	$(COMP) $(COMPFLAG) -c LogDAO.cpp
 GraphDAO.o: GraphDAO.h GraphDAO.cpp GraphData.h
 	$(COMP) $(COMPFLAG) -c GraphDAO.cpp
-clean: rm $(OBJ)
+clean: 
+	rm $(OBJ)

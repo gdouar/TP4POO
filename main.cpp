@@ -9,14 +9,11 @@
 #include "LogsChecker.h"
 
 //Interprète les commandes de l'utilisateur
-int interpreterCmde(int & argc, char** argv)
+int interpreterCmde(int & argc, char* argv[])
 {
 	bool enleverExtensions = false;
-	int heure;
+	int heure=-1;
 	string nomFichierGraph;
-	string nomFichierLog;
-
-	cout << "argc : " << argc << endl;
 
 	if(argc < 2 )
 	{
@@ -24,12 +21,11 @@ int interpreterCmde(int & argc, char** argv)
 		cerr << "Usage: " << argv[0] << " [options] nomfichier.log" << endl;
 		return 1;
 	}
-	
+
 
 	for(int i=1; i< argc-1; i++)
 	{
-		cout << "loop" << endl;
-		cout << argv[i] << endl;
+		
 		if(strcmp(argv[i], "-e") == 0)
 		{
 			enleverExtensions = true;
@@ -74,13 +70,29 @@ int interpreterCmde(int & argc, char** argv)
 			cerr << "Warning : paramètre inconnu non pris en compte : " << argv[i] << endl;
 		}
 	}
-	string s(argv[argc-1]);
-	if(!(s.substr(0,1)).compare("-"))
+
+
+	string nomFichierLog(argv[argc-1]);
+	if(!(nomFichierLog.substr(0,1)).compare("-"))
 	{
 		cerr << "Warning : paramètre inconnu non pris en compte : " << argv[argc-1] << endl;
 		return 1;
 	}
-	nomFichierLog = argv[argc-1];
+	GraphData gData(enleverExtensions, heure);
+
+	LogDAO ldao(nomFichierLog);
+	Log* ld;
+	while((ld = ldao.GetNextLog())!=nullptr)
+	{
+		gData.AddLog(ld);
+	}
+	
+	list<pair<int, string>> results = gData.get10best();  
+	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
+	{
+		cout << (*it).second << " (" << (*it).first << " hit" << (((*it).first >1) ? "s":"") << ")" <<endl;
+	}
+	
 	return 0;
 
 }

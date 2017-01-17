@@ -55,10 +55,6 @@ public:
 
     GraphData (bool $e = false, int $t=-1);
     // Mode d'emploi : Constructeur par défaut de GraphData
-
-	
-    //void GenerateGraphViz(string nomFichier);
-	// Mde d'emploi : Construit le fichier GraphViz .dot dans le fichier donné en paramètre 
 	
 
 //------------------------------------------------------------------ PRIVE

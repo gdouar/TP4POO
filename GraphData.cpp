@@ -116,12 +116,7 @@ void GraphData::AddLog(Log * l)
 
 list<pair<int, string>> GraphData::get10best()
 {
-	
-/*	for(unordered_map<int, string>::iterator it =id2Url.begin();it!=id2Url.end();++it)
-	{
-		cout << endl << (*it).first << " : " << (*it).second << endl;
-	}*/
-	cout << "size : " << urlAndHits.size();
+
 	list<pair<int, string>> l1; 
 	int cpt = 0;
 	for(set <pair<int, int>>::iterator it=urlAndHits.begin();it!=urlAndHits.end() && cpt < 10;++it, ++cpt)
@@ -130,7 +125,6 @@ list<pair<int, string>> GraphData::get10best()
 		int idURL = (*it).second;
 		string url = (*(id2Url.find(idURL))).second;
 		l1.push_back(make_pair((*it).first, url)); 
-		cout << endl <<  (*it).first << " - " << (*it).second << endl;
 	}
 	return l1;
 }  // ------------------ Fin de get10best
@@ -141,64 +135,6 @@ GraphData::GraphData (bool $e, int $t) : ignoreExtensions($e), time($t)
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;
 #endif
 } //----- Fin de GraphData
-
-/*
-void GraphData::GenerateGraphViz(string nomFichier)
-{
-	//si 0 noeuds, afficher msg erreur
-	if(id2Url.empty())
-	{
-		cerr << "La map est vide" << endl;
-		return;
-	}
-
-	//check si le fichier existe deja : si oui abandonner
-	ifstream is_read;
-	is_read.open(nomFichier.c_str());
-	if(is_read.is_open() && is_read)
-	{
-		cerr << "Le fichier existe déjà." << endl;
-		is_read.close();
-		return;
-	}
-	is_read.close();
-
-	ofstream os;
-	os.open(nomFichier.c_str());
-	
-	//check si le fichier ouvert en écriture
-	if(!os)
-	{
-		cerr << "Fichier non ouvert en écriture" << endl;
-		os.close();
-		return;
-	}
-
-	//ecriture du graphe
-	os << "digraph {\r\n";
-
-	//declaration des nodes
-	for(unordered_map<int, string>::iterator it=id2Url.begin(); it != id2Url.end(); ++it)
-	{
-		os << "node" << it->first << " [label=\"" << it->second << "\"];\r\n" ;
-	}
-
-	//declaration des liens referers / node
-	for(unordered_map<int, pair<unordered_map<int, int>, int>>::iterator itNode = id2Referers.begin(); itNode != id2Referers.end(); ++itNode)
-	{
-		for(unordered_map<int, int>::iterator itReferers = itNode->second.first.begin(); itReferers != itNode->second.first.end(); ++itReferers)
-		{
-			os << "node" << itReferers->first << " -> node" << itNode->first << " [label=\"" << itReferers->second << "\"];\r\n";
-		}
-	}
-
-	//fin
-	os << "}\r\n";
-	os.close();
-	return;
-
-} // ----- Fin de GenerateGraphViz
-*/
 
 //------------------------------------------------------------------ PRIVE
 
