@@ -16,7 +16,6 @@
 //--------------------------------------------------- Interfaces utilisées
 using namespace std;
 #include <string>
-#include <set>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -26,7 +25,7 @@ using namespace std;
 //
 //	Classe rassemblant les données d'une entrée de Log.
 //------------------------------------------------------------------------
-class GraphData;
+
 
 class Log
 {
@@ -36,18 +35,38 @@ public:
 
 	friend ostream & operator << (ostream & out, const Log & log);
 
-	friend class GraphData;
-//----------------------------------------------------- Méthodes publiques
-	bool CanBeIgnored() const; 
-	//Méthode renvoyant vrai si le log ne doit pas être considéré par le flag -e
+//----------------------------------------------------- Méthodes publiques (getters)
 
-	bool IsInInterval(const unsigned int heure) const;
-	//Méthode renvoyant vrai si le log est situé dans la tranche horaire [heure, heure+1[
+	string GetReferer() const;
+	 // Getter du referer du log
+	string GetCible() const;
+	 // Getter de la cible du log
+	string GetHeure() const;
+	 // Getter de l'heure du log au format HH:MM:SS
+	string GetIP() const;
+	 // Getter de l'IP du log
+	string GetLogname() const;
+	 // Getter du logname du log
+	string GetUsername() const;
+	 // Getter de l'username du log
+	string GetDate() const;
+	 // Getter de la date du log au format JJ/Mon/AAAA
+	string GetDiffGW() const;
+	 // Getter de la différence Greenwich de l'entrée de log
+	string GetMethod() const;
+	 // Getter de la méthode du log
+	unsigned int GetStatus() const;
+	 // Getter du statut de la requête cliente
+	unsigned int GetDataSize() const;
+	 // Getter de la taille des données de la réponse
+
+//----------------------------------------------------- Constructeurs/Destructeur	
 	
    Log (string $ref, string $cible, string $heure, string $IP, 
    string $logname, string $username, string $date, string $diffGW, 
 	string $method, unsigned int $status, unsigned int $dataSize);
     // Mode d'emploi : Constructeur paramétré de Log.
+   
    
    Log();
     // Mode d'emploi : Constructeur par défaut de Log.
@@ -62,7 +81,6 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 private:			//Attributs privés
-	static set<string> ignored_extensions;		//Tableau statique des extensions ignorées par -e
 	
 	string ref;					//Referer de l'entrée de log
 	string cible;				//Cible de l'entrée de log (ressource HTTP de la requête cliente)

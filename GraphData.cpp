@@ -20,6 +20,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 #include "GraphData.h"
+#include "LogsChecker.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -51,13 +52,14 @@ void GraphData::AddLog(Log * l)
 //associé à la ligne de log, ainsi que le nombre total de hits de la cible. Enfin, on insère ou modifie une entrée dans le set ordonné de paires
 // <idCible, nbTotalHits> urlAndHits pour maintenir la cohérence entre les deux structures de données.
 
-	if(((ignoreExtensions && l->CanBeIgnored()) || ((time != -1) && !l->IsInInterval(time))))		//Filtrage des logs
+
+	if(((ignoreExtensions && LogsChecker::CanBeIgnored(l)) || ((time != -1) && !LogsChecker::IsInInterval(l, time))))		//Filtrage des logs
 	{
 		delete l;
 		return;
 	}
 
-	string cible = l->cible;
+	string cible = l->GetCible();
 	// cout << endl << "Cible = " << cible << endl;
 	int idCible;
 	if (url2id.find(cible) == url2id.end())					//Si la cible n'existe pas dans les maps des URLs existantes, on l'ajoute
@@ -74,7 +76,7 @@ void GraphData::AddLog(Log * l)
 	}
 	
 	unordered_map<int, pair<unordered_map<int, int>, int>> :: iterator it;		//Pointeur sur la structure id2Referers
-	int idReferer = getReferer(l->ref);						//Identifiant du referer associé
+	int idReferer = getReferer(l->GetReferer());						//Identifiant du referer associé
 	if(((it = id2Referers.find(idCible)) != id2Referers.end()))		// Si l'URL est une cible déjà existante...
 	{
 		// cout << "Cible spécifique retrouvée. " << endl;

@@ -23,29 +23,64 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 //----------------------------------------------------- Méthodes publiques
 
-set<string> Log::ignored_extensions = {"jpeg", "png", "js", "css", "bmp", "gif", "ani", "cal",
-									   "fax", "img", "jbg", "jpe", "jpg", "mac", "pbm", "tga", "ico"};
-								
-									   
-bool Log::IsInInterval(const unsigned int h) const
-{
-	unsigned int hLog;
-	istringstream (heure.substr(0, 2)) >> hLog;
-	return hLog==h;
-	
-}// -------- Fin de IsInInterval
 
-									  
-bool Log::CanBeIgnored() const 
+string Log::GetReferer() const
 {
-	
-	std::string ext = cible.substr(cible.find_last_of(".")+1, cible.size()); 
-	return (ignored_extensions.find(ext) != ignored_extensions.end());
-	
-	
-} //---------- Fin de IsWebContentOrImage
+	return ref;
+}//----- Fin de GetReferer
+
+
+string Log::GetCible() const
+{
+	return cible;
+}//----- Fin de GetCible
+
+string Log::GetHeure() const
+{
+	return heure;
+}//----- Fin de GetHeure
+
+string Log::GetIP() const
+{
+	return IP;
+}//----- Fin de GetIP
+
+string Log::GetLogname() const
+{
+	return logname;
+}//----- Fin de GetLogname
+
+string Log::GetUsername() const
+{
+	return username;
+}//----- Fin de GetUsername
+
+string Log::GetDate() const
+{
+	return date;
+}//----- Fin de GetDate
+
+string Log::GetDiffGW() const
+{
+	return diffGW;
+}//----- Fin de GetDiffGW
+
+string Log::GetMethod() const
+{
+	return method;
+}//----- Fin de GetMethod
+
+unsigned int Log::GetStatus() const
+{
+	return status;
+}//----- Fin de GetStatus
+
+unsigned int Log::GetDataSize() const
+{
+	return dataSize;
+}//----- Fin de GetDataSize
+
 		
-
 Log::Log (string $ref, string $cible, string $heure, string $IP, 
 string $logname, string $username, string $date, string $diffGW, 
 string $method, unsigned int $status, unsigned int $dataSize):

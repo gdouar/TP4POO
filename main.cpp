@@ -6,6 +6,7 @@
 #include "LogDAO.h"
 #include "GraphDAO.h"
 #include "Log.h"
+#include "LogsChecker.h"
 /*
 //Affiche l'interface utilisateur
 int chargerIHM(int & argc, char* argv)
@@ -110,23 +111,23 @@ void testChargementLogs()
 void testIgnoreExtension()
 {
 	Log* ld2 = new Log("ref", "/fradth.cs/index.html", "y", "h", "k", "j", "r", "e", "t", 3, 4);
-	cout << endl << ld2->CanBeIgnored();
+	cout << endl << LogsChecker::CanBeIgnored(ld2);
 	delete ld2;
 	
 	ld2 = new Log("ref", "/fradth.cs/index.js", "y", "h", "k", "j", "r", "e", "t", 3, 4);
-	cout << endl << ld2->CanBeIgnored();
+	cout << endl << LogsChecker::CanBeIgnored(ld2);
 	delete ld2;
 	
 	ld2= new Log("ref", "/fradth.cs/index.bmp", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
-	cout << endl << ld2->CanBeIgnored();
+	cout << endl << LogsChecker::CanBeIgnored(ld2);
 	delete ld2;
 	
 	ld2= new Log("ref", "/fradth.cs/index.css", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
-	cout << endl << ld2->CanBeIgnored();
+	cout << endl << LogsChecker::CanBeIgnored(ld2);
 	delete ld2;
 	
 	ld2= new Log("ref", "/fradth.cs/index.png", "y", "h", "k", "j", "r", "e", "t", 3, 4); 
-	cout << endl << ld2->CanBeIgnored();
+	cout << endl << LogsChecker::CanBeIgnored(ld2);
 	delete ld2;
 }
 
@@ -139,7 +140,7 @@ void testComprisHoraire()
 	{
 		 ld=ldao.GetNextLog();
 		cout << *ld;
-		cout << endl << ld->IsInInterval(11) << endl;
+		cout << endl << LogsChecker::IsInInterval(ld, 11) << endl;
 		delete ld;
 	}
 
