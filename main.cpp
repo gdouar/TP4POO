@@ -211,6 +211,20 @@ void testAffichageLogs()
 	
 }
 
+//Fonction de test de la séparation de caractères
+void testSepareChar()
+ {
+	Log* ld = new Log("http://tt-rss.org/", "/cas/themes/insa/media/favicon.ico;jsessionid=371C6624392DFE7B7B84D27C96EA74C3.dsi-vm04", "11:45:21", "127.0.0.1", "-", "-",
+				"08/Sep/2012", "+0200", "GET", 200, 12601);
+	cout << (*ld);
+	delete ld;
+	ld = new Log("http://intranet-if.insa-lyon.fr/cas/themes/insa/media/favicon.ico;jsessionid=371C6624392DFE7B7B84D27C96EA74C3.dsi-vm04", "/cas/themes/insa/media/favicon.ico;jsessionid=371C6624392DFE7B7B84D27C96EA74C3.dsi-vm04", "11:45:21", "127.0.0.1", "-", "-",
+				"08/Sep/2012", "+0200", "GET", 200, 12601);	
+	cout << (*ld);		
+	delete ld;			
+				
+ }
+
 
 
 //Fonction de test de l'injection des données dans la classe de structures optimisées  (WIP...)
@@ -341,5 +355,6 @@ int main(int argc, char* argv[])
 	//testInitGraphDataFiltrageHoraire();
 	//testInitGraphDataFiltrageExtension();
 	//testInitGraphDataFiltrageBoth();
+//	testSepareChar();
 	return interpreterCmde(argc, argv);
 }

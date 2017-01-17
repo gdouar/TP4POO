@@ -92,6 +92,7 @@ status($status), dataSize($dataSize)
 		ref = $ref;
 		ref = eraseBeforeChar(ref, "?");		//On enlève les paramètres de l'URL du referer
 		ref = eraseBeforeChar(ref, ";");
+	
 		if(ref.find(localhost)!=string::npos)		//Si c'est un referer local, on enlève le localhost
 		{
 			ref = ref.substr(31, $ref.size());
@@ -106,6 +107,7 @@ status($status), dataSize($dataSize)
 	
 	cible = $cible;
 	cible = eraseBeforeChar(cible, "?"); 
+	cible = eraseBeforeChar(cible, ";"); 
 	cible = (cible.back() == '/') ? cible.substr(0, cible.size()-1) : cible;
 	
 	
