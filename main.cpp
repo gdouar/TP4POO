@@ -88,7 +88,10 @@ int interpreterCmde(int & argc, char* argv[])
 	{
 		gData.AddLog(ld);
 	}
-	
+	if(genererGraphe)
+	{
+		gData.GenerateGraphViz(nomFichierGraph);
+	}
 	list<pair<int, string>> results = gData.get10best();  
 	for(list<pair<int,string >>::iterator it = results.begin();it!=results.end();++it)
 	{
