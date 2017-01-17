@@ -1,1 +1,1 @@
-../../analog ../filterFile.log > out.txt
+../../analog -e -e -e -e -t 10 -t 20 -t 11 ../filterFile.log
