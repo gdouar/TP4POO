@@ -1,1 +1,1 @@
-cat 
+../../analog -e ../filterFile.log > out.txt
