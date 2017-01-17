@@ -1,0 +1,21 @@
+digraph {
+node11 [label="www.google.fr"];
+node10 [label="/temps"];
+node9 [label="/temps/3IF37.html"];
+node8 [label="/temps/3IF38.js"];
+node7 [label="/temps/4IF19.html"];
+node6 [label="/temps/4IF20.html"];
+node5 [label="/temps/4IF19.css"];
+node4 [label="/temps/4IF17.html"];
+node3 [label="/temps/4IF18.html"];
+node2 [label="/temps/4IF17.css"];
+node1 [label="/temps/4IF15.html"];
+node0 [label="/temps/4IF16.html"];
+node11 -> node10 [label="2"];
+node9 -> node8 [label="1"];
+node7 -> node6 [label="1"];
+node4 -> node3 [label="1"];
+node0 -> node2 [label="1"];
+node3 -> node5 [label="1"];
+node1 -> node0 [label="1"];
+}

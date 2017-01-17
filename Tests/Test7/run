@@ -1,1 +1,1 @@
-./exe
+../../analog -e -g fichier.dot ../filterFile.log
