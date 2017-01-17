@@ -90,7 +90,7 @@ status($status), dataSize($dataSize)
 {
 	if($ref != "-")
 	{
-		if($ref.find("http://intranet-if.insa-lyon.fr")!=string::npos)
+		if($ref.find(localhost)!=string::npos)
 		{
 			ref = $ref.substr(31, $ref.size());
 		}

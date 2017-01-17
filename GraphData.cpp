@@ -75,13 +75,13 @@ void GraphData::AddLog(Log * l)
 		// cout << "URL cible retrouvée. " << endl;
 	}
 	
-	unordered_map<int, pair<unordered_map<int, int>, int>> :: iterator it;		//Pointeur sur la structure id2Referers
+	unordered_map<int, unordered_map<int, int>> :: iterator it;		//Pointeur sur la structure id2Referers
 	int idReferer = getReferer(l->GetReferer());						//Identifiant du referer associé
 	if(((it = id2Referers.find(idCible)) != id2Referers.end()))		// Si l'URL est une cible déjà existante...
 	{
 		// cout << "Cible spécifique retrouvée. " << endl;
-		int previousHits = ((*it).second).second;		//...on retrouve l'ancien total de Hits à partir de l'idCible pour identifier la bonne paire
-		unordered_map<int, int>* map = &(((*it).second).first);		//Pointeur sur la map existante affectée à l'identifiant idCible dans id2Referers
+		int previousHits = (*(id2Totalhits.find(idCible))).second;   		//...on retrouve l'ancien total de Hits à partir de l'idCible pour identifier la bonne paire
+		unordered_map<int, int>* map = &(((*it).second));		//Pointeur sur la map existante affectée à l'identifiant idCible dans id2Referers
 		unordered_map<int, int>::iterator itReferer;
 		if((itReferer = map->find(idReferer)) != map->end())	//Si on a trouvé le referer associé dans la map, 
 																		//on incrémente son nombre associé de hits
@@ -94,7 +94,7 @@ void GraphData::AddLog(Log * l)
 			// cout << "Referer non déjà associé";				
 			map->insert(make_pair(idReferer, 1));		//Sinon, on insère une nouvelle entrée dans la sous-map de id2Referers
 		}
-		((*it).second).second++;				//Dans tous les cas, le nombre total de hits est incrémenté.
+		((*(id2Totalhits.find(idCible))).second)++;				//Dans tous les cas, le nombre total de hits est incrémenté.
 		
 		urlAndHits.erase(make_pair(previousHits, idCible));
 									//On modifie la correspondance dans le set ordonné de paires <id, nbTotalHits>
@@ -104,8 +104,9 @@ void GraphData::AddLog(Log * l)
 		// cout << "Cible spécifique insérée";
 		unordered_map<int, int> m;		//Si la cible n'existe pas encore, on ajoute une nouvelle entrée à id2Referers
 		m.insert(make_pair(idReferer, 1));		//Définition de la map (premier élément de la paire de id2Referers)
-		id2Referers.insert(make_pair(idCible, make_pair(m, 1)));		//Ajout d'une nouvelle entrée à id2Referers. Le nombre total de hits est de 1.
+		id2Referers.insert(make_pair(idCible, (m)));		//Ajout d'une nouvelle entrée à id2Referers. Le nombre total de hits est de 1.
 																	//Le nombre de hits total est forcément de 1 pour la nouvelle cible
+		id2Totalhits.insert(make_pair(idCible, 1));															
 		urlAndHits.insert(make_pair(1, idCible));
 	}
 	//cout << (*l);
@@ -116,14 +117,13 @@ void GraphData::AddLog(Log * l)
 list<pair<int, string>> GraphData::get10best()
 {
 	
-	
 /*	for(unordered_map<int, string>::iterator it =id2Url.begin();it!=id2Url.end();++it)
 	{
 		cout << endl << (*it).first << " : " << (*it).second << endl;
 	}*/
 	cout << "size : " << urlAndHits.size();
 	list<pair<int, string>> l1; 
-	int cpt=0;
+	int cpt = 0;
 	for(set <pair<int, int>>::iterator it=urlAndHits.begin();it!=urlAndHits.end() && cpt < 10;++it, ++cpt)
 	{
 		
@@ -142,7 +142,7 @@ GraphData::GraphData (bool $e, int $t) : ignoreExtensions($e), time($t)
 #endif
 } //----- Fin de GraphData
 
-
+/*
 void GraphData::GenerateGraphViz(string nomFichier)
 {
 	//si 0 noeuds, afficher msg erreur
@@ -198,7 +198,7 @@ void GraphData::GenerateGraphViz(string nomFichier)
 	return;
 
 } // ----- Fin de GenerateGraphViz
-
+*/
 
 //------------------------------------------------------------------ PRIVE
 
@@ -222,7 +222,7 @@ int GraphData::getReferer(string referer)
 	else {
 		// cout << "Referer retrouvé";
 		return (*it).second;
-	}
+	} // ------ Fin de getReferer
 	
 }
 

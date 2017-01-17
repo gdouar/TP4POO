@@ -38,9 +38,14 @@ public:
    GraphDAO(string $filename="");
     // Mode d'emploi : Constructeur par défaut de GraphDAO.
 	
-	void serialize(list<pair<int, string>> & l);
-	//Sérialise les données de la liste passée en paramètre au format GraphViz.
-	//Cette liste contient au maximum 10 paires <URL, nbTotalHits> rangées suivant le nombre total de hits dans l'ordre décroissant.
+	template<typename idType, typename contentType, typename linkType>
+	void serialize(unordered_map<idType, contentType> & id2Content, 
+					unordered_map<idType, unordered_map<idType, linkType>> &  id2Nodes);
+	// Mode d'emploi : méthode générique permettant de générer un graphe (fichier au format GraphViz).
+	// Le premier paramètre (id2Content) est une map associant à un identifiant de type idType un contenu de type contentType (noeud du graphe).
+	// Cette map permet de gérer le stockage en mémoire des éléments sans multiplier inutilement les valeurs des noeuds.
+	// Le second paramètre est une autre map associant à pour chaque noeud une map de ses prédécesseurs sous la forme <idPredecesseur, valeur de l'arc (de type contentType)>
+	// (qui sont donc également des successeurs potentiels d'autres noeuds). 
 	
 
 //------------------------------------------------------------------ PRIVE

@@ -57,7 +57,7 @@ public:
     // Mode d'emploi : Constructeur par défaut de GraphData
 
 	
-    void GenerateGraphViz(string nomFichier);
+    //void GenerateGraphViz(string nomFichier);
 	// Mde d'emploi : Construit le fichier GraphViz .dot dans le fichier donné en paramètre 
 	
 
@@ -73,9 +73,11 @@ private:			//Attributs et fonctions privés
 	int getReferer(string referer);
 	
 	unordered_map<int, string> id2Url;	   //Structure MAP comportant l'identifiant et le string de l'URL (l'id est une clé)
-	unordered_map<int, pair<unordered_map<int, int>, int>> id2Referers;   //Structure MAP comportant l'identifiant de l'URL et les détails de ses referers
+	unordered_map<int, unordered_map<int, int>> id2Referers;   //Structure MAP comportant l'identifiant de l'URL et les détails de ses referers
 	unordered_map<string, int> url2id;			//Structure MAP comportant le string et l'identifiant de l'URL (le string est une clé)
+	unordered_map<int, int> id2Totalhits;		//Structure MAP comportant l'ID de la cible associé à son nombre total de hits
 	set <pair<int, int>, std::greater<pair<int, int>>> urlAndHits;				//Structure SET permettant de stocker des paires de valeurs (id URL, nombre de hits)
+	
 	
 			//  => TODO : surcharge des opérateurs > / >= sur le set <int, int> => permet de ranger la collection selon la valeur du 2ème élément (nombre de hits)
 	

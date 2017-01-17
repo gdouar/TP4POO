@@ -25,11 +25,11 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-
+/*
 void serialize(list<pair<int, string>> & l)
 {
 	return;
-}//------ Fin de serialize
+}//------ Fin de serialize*/
 
 
 GraphDAO::GraphDAO (string $filename) : filename($filename)

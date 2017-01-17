@@ -94,6 +94,7 @@ private:			//Attributs privés
 	unsigned int status;					//Statut de la réponse HTTP de l'entrée de log
 	unsigned int dataSize;				//Taille en octets de la réponse comprise dans l'entrée de log
 	
+	const string localhost = "http://intranet-if.insa-lyon.fr";
 };
 
 //-------------------------------- Autres définitions dépendantes de <Log>
