@@ -1,5 +1,5 @@
 /*************************************************************************
-                           GraphDAO  -  Classe chargée de l'écriture du graphe des visites dans un format GraphViz.
+                           GraphDAO  -  Classe chargée de l'écriture d'un graphe dans un format GraphViz.
                              -------------------
     début                : 10/01/2017
     copyright            : (C) 2017 Lucas POISSE - Benoît ZHONG
@@ -18,6 +18,7 @@ using namespace std;
 #include <string>
 #include <list>
 #include "GraphData.h"
+
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -25,7 +26,7 @@ using namespace std;
 //------------------------------------------------------------------------
 // Rôle de la classe <GraphDAO>
 //
-//	Classe chargée de l'écriture du graphe des visites dans un format GraphViz.
+//	Classe chargée de l'écriture d'un graphe dans un format GraphViz.
 //------------------------------------------------------------------------
 
 class GraphDAO
@@ -50,14 +51,13 @@ public:
 		//si 0 noeuds, afficher msg erreur
 		if(id2Content.empty())
 		{
-			cerr << "La map est vide" << endl;
+			cout << "Warning : aucune entrée n'a été trouvée. Aucun fichier DOT n'a donc été généré." << endl;
 			return;
 		}
 
 		//check si le fichier existe deja : si oui faire un menu
 		ifstream is_read;
 		is_read.open(filename.c_str());
-
 		if(is_read.is_open() && is_read)
 		{
 			cout << "Warning : Le fichier existe déjà." << endl;
@@ -67,8 +67,10 @@ public:
 			if(!(str == 'y'))
 			{
 				is_read.close();
+				cout << "Fichier non écrasé." << endl;
 				return;
 			}
+			cout << "Fichier écrasé." << endl;
 		}
 		is_read.close();
 

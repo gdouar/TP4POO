@@ -46,7 +46,12 @@ Log* LogDAO::GetNextLog()
 			{
 				words[3] = 	words[3].substr(1, words[3].size());
 				string jour	= words[3].substr(0,10);		//Infos date
-				string horaire = words[3].substr(12,8);				
+				string horaire = words[3].substr(12,8);	
+				int h, mn, sec;
+				istringstream (horaire.substr(0,2)) >> h;
+				istringstream (horaire.substr(3, 2)) >> mn;
+				istringstream (horaire.substr(6, 2)) >> sec;
+				Heure hour(h, mn, sec);		//L'heure du log
 				words[4] = words[4].substr(0, words[4].size()-1);	//Différence Greenwich
 				words[5].erase(0, 1);		//Méthode HTTP
 				words[10] = words[10].substr(1, words[10].size()-2);		//Referer
@@ -55,7 +60,7 @@ Log* LogDAO::GetNextLog()
 				
 				istringstream ((words[8])) >> status;
 				istringstream ((words[9])) >> datasize;
-				Log* l = new Log(words[10], words[6], horaire, words[0], words[1], words[2], jour, words[4], words[5], status, datasize);
+				Log* l = new Log(words[10], words[6], hour, words[0], words[1], words[2], jour, words[4], words[5], status, datasize);
 				return l;
 			}
 		}
@@ -92,4 +97,4 @@ void split(const string& str, vector<string>& cont)
     copy(istream_iterator<string>(iss),
          istream_iterator<string>(),
          back_inserter(cont));
-}
+} // ----- Fin de split

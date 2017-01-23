@@ -16,6 +16,7 @@
 //--------------------------------------------------- Interfaces utilisées
 using namespace std;
 #include <string>
+#include "Heure.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -41,7 +42,7 @@ public:
 	 // Getter du referer du log
 	string GetCible() const;
 	 // Getter de la cible du log
-	string GetHeure() const;
+	Heure GetHeure() const;
 	 // Getter de l'heure du log au format HH:MM:SS
 	string GetIP() const;
 	 // Getter de l'IP du log
@@ -62,7 +63,7 @@ public:
 
 //----------------------------------------------------- Constructeurs/Destructeur	
 	
-   Log (string $ref, string $cible, string $heure, string $IP, 
+   Log (string $ref, string $cible, Heure $heure, string $IP, 
    string $logname, string $username, string $date, string $diffGW, 
 	string $method, unsigned int $status, unsigned int $dataSize);
     // Mode d'emploi : Constructeur paramétré de Log.
@@ -87,7 +88,7 @@ private:			//Attributs privés
 	
 	string ref;					//Referer de l'entrée de log
 	string cible;				//Cible de l'entrée de log (ressource HTTP de la requête cliente)
-	string heure;				//Heure de l'entrée de log
+	Heure heure;				//Heure de l'entrée de log
 	string IP;					//IP de l'entrée de log
 	string logname;				//Logname de l'entrée de log
 	string username;			//Nom utilisateur de l'entrée de log

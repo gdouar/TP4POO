@@ -18,6 +18,7 @@ using namespace std;
 #include <list>
 #include <fstream>
 #include "Log.h"
+#include "Heure.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -27,14 +28,6 @@ using namespace std;
 //
 // Classe rassemblant les données utilisées par l'application dans des structures de recherche et d'insertion adaptées 
 //------------------------------------------------------------------------
-/*
-struct Sup_pair_cmp {
-	bool operator () (std::pair<int, int>  p1, std::pair<int, int>  p2)
-	{
-		return true;
-		
-	}  // ----- Fin de operator ()
-};	*/
 
 class GraphData
 {
@@ -47,18 +40,17 @@ public:
 	// Mde : ajoute un log (ou non, en fonction des paramètres de filtrage) aux structures de données du graphe.
 	// Contrat : le log doit être non null !
 	
-	list<pair<int, string>> get10best() ;
+	list<pair<int, string>> Get10best() ;
 	//Mde: renvoie une liste correspondant aux 10 ressources les plus consultées. 
 	//La liste comporte des éléments faisant correspondre une URL à un entier correspondant au nombre total de hits sur cette cible
 	//La liste est ordonnée en fonction de ce nombre total, du plus grand au plus petit.
 	//Elle comporte au maximum 10 éléments
 
-    GraphData (bool $e = false, int $t=-1);
+    GraphData (bool $e = false, Heure $t=Heure());
     // Mode d'emploi : Constructeur par défaut de GraphData
 
     void GenerateGraphViz(string nomFichier);
     // Mode d'emploi : génère le fichier au format GraphViz
-	
 
 //------------------------------------------------------------------ PRIVE
 
@@ -77,11 +69,10 @@ private:			//Attributs et fonctions privés
 	unordered_map<int, int> id2Totalhits;		//Structure MAP comportant l'ID de la cible associé à son nombre total de hits
 	set <pair<int, int>, std::greater<pair<int, int>>> urlAndHits;				//Structure SET permettant de stocker des paires de valeurs (id URL, nombre de hits)
 	
-	
-			//  => TODO : surcharge des opérateurs > / >= sur le set <int, int> => permet de ranger la collection selon la valeur du 2ème élément (nombre de hits)
-	
+		
 	bool ignoreExtensions;		//Booléen passant à vrai si on souhaite éviter les JS/CSS/Images
-	int time; 		//Entier correspondant à l'heure de filtrage, si elle est renseignée (-1 étant une valeur incorrecte)
+	Heure time; 		//Heure correspondant à l'heure de filtrage, si elle est renseignée. Si l'heure est égale à 24 (construction par défaut de la structure Heure) 
+						//alors le paramètre n'est pas pris en compte (champ heure compris entre 23 et 24).
 };
 
 

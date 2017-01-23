@@ -21,7 +21,7 @@ using namespace std;
 #include "GraphData.h"
 #include "LogsChecker.h"
 #include "GraphDAO.h"
-
+#include "Heure.h"
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -53,12 +53,12 @@ void GraphData::AddLog(Log * l)
 // <idCible, nbTotalHits> urlAndHits pour maintenir la cohérence entre les deux structures de données.
 
 
-	if(((ignoreExtensions && LogsChecker::CanBeIgnored(l)) || ((time != -1) && !LogsChecker::IsInInterval(l, time))))		//Filtrage des logs
+	if(((ignoreExtensions && LogsChecker::CanBeIgnored(l)) || ((time.h != 24) && !LogsChecker::IsInInterval(l, time))))		//Filtrage des logs
 	{
 		delete l;
 		return;
 	}
-
+	
 	string cible = l->GetCible();
 	// cout << endl << "Cible = " << cible << endl;
 	int idCible;
@@ -114,7 +114,7 @@ void GraphData::AddLog(Log * l)
 	return;
 }
 
-list<pair<int, string>> GraphData::get10best()
+list<pair<int, string>> GraphData::Get10best()
 {
 
 	list<pair<int, string>> l1; 
@@ -129,7 +129,7 @@ list<pair<int, string>> GraphData::get10best()
 	return l1;
 }  // ------------------ Fin de get10best
 
-GraphData::GraphData (bool $e, int $t) : ignoreExtensions($e), time($t)
+GraphData::GraphData (bool $e, Heure $t) : ignoreExtensions($e), time($t)
 {
 #ifdef MAP
     cout << "Appel au constructeur par défaut de <GraphData>" << endl;

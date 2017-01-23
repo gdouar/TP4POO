@@ -15,8 +15,10 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include <sstream>
+
 //------------------------------------------------------ Include personnel
 #include "Log.h"
+#include "Heure.h"
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -34,7 +36,7 @@ string Log::GetCible() const
 	return cible;
 }//----- Fin de GetCible
 
-string Log::GetHeure() const
+Heure Log::GetHeure() const
 {
 	return heure;
 }//----- Fin de GetHeure
@@ -80,7 +82,7 @@ unsigned int Log::GetDataSize() const
 }//----- Fin de GetDataSize
 
 		
-Log::Log (string $ref, string $cible, string $heure, string $IP, 
+Log::Log (string $ref, string $cible, Heure $heure, string $IP, 
 string $logname, string $username, string $date, string $diffGW, 
 string $method, unsigned int $status, unsigned int $dataSize):
 ref($ref), heure($heure), IP($IP), logname($logname),
@@ -91,8 +93,8 @@ status($status), dataSize($dataSize)
 	{
 		ref = $ref;
 		ref = eraseBeforeChar(ref, "?");		//On enlève les paramètres de l'URL du referer
-		ref = eraseBeforeChar(ref, ";");
-	
+		ref = eraseBeforeChar(ref, ";");	
+		ref = eraseBeforeChar(ref, "#");		//On enlève l'emplacement dans la page signalé par un #
 		if(ref.find(localhost)!=string::npos)		//Si c'est un referer local, on enlève le localhost
 		{
 			ref = ref.substr(31, $ref.size());
@@ -106,8 +108,9 @@ status($status), dataSize($dataSize)
 	}
 	
 	cible = $cible;
-	cible = eraseBeforeChar(cible, "?"); 
+	cible = eraseBeforeChar(cible, "?");		//Les mêmes traitements sont ensuite appliqués à la cible 
 	cible = eraseBeforeChar(cible, ";"); 
+	cible = eraseBeforeChar(cible, "#");
 	cible = (cible.back() == '/') ? cible.substr(0, cible.size()-1) : cible;
 	
 	
@@ -119,9 +122,8 @@ status($status), dataSize($dataSize)
 Log::Log ()
 
 {
-	ref=cible=date=heure=IP=logname=username=diffGW=method="";
+	ref=cible=date=IP=logname=username=diffGW=method="";
 	status=dataSize=0;
-	
 	#ifdef MAP
 		cout << "Appel au constructeur par défaut de <Log>" << endl;
 	#endif
@@ -140,7 +142,9 @@ ostream & operator << (ostream & out, const Log & log)
 	std::ostringstream stm;
 	
 	out << endl << "*** LOG *** \n Referer: " + log.ref + "\n Cible : " + log.cible + "\n Date : " + log.date 
-	+ "\n Heure : " + log.heure+"\n IP : " + log.IP + "\n Logname : " + log.logname + "\n Username : " + log.username
+	+ "\n";
+	out << log.heure;
+	out << "\n IP : " + log.IP + "\n Logname : " + log.logname + "\n Username : " + log.username
 	+ "\n Greenwich diff :" + log.diffGW + "\n Method : " + log.method + "\n Status : ";
 	stm << log.status;
 	out << stm.str() + "\n Data Size :";
