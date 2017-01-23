@@ -1,1 +1,1 @@
-../../analog -e -g forbidden.log ../filterFile.log
+../../analog -e -g ../forbidden.log ../filterFile.log
