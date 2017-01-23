@@ -48,6 +48,12 @@ public:
 	// Le second paramètre est une autre map associant à pour chaque noeud une map de ses prédécesseurs sous la forme <idPredecesseur, valeur de l'arc (de type contentType)>
 	// (qui sont donc également des successeurs potentiels d'autres noeuds). 
 	{
+		/*		Principe S => WIP
+		unordered_map<idType, contentType> id2Content;
+		copy(mapIterators.first, mapIterators.second, m1.begin());	//Map des traductions ID => contenu
+		* */
+		
+		
 		//si 0 noeuds, afficher msg erreur
 		if(id2Content.empty())
 		{

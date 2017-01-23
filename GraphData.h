@@ -17,6 +17,8 @@ using namespace std;
 #include <string>
 #include <list>
 #include <fstream>
+#include <utility>
+
 #include "Log.h"
 #include "Heure.h"
 //------------------------------------------------------------- Constantes
@@ -52,6 +54,13 @@ public:
     void GenerateGraphViz(string nomFichier);
     // Mode d'emploi : génère le fichier au format GraphViz
 
+	pair<unordered_map<int, string>::const_iterator, unordered_map<int, string>::const_iterator> GetMapIterators() const;
+	//Mode d'emploi : retourne deux itérateurs constants correspondant au début et à la fin de la map des traductions Id -> URL
+	
+	pair<unordered_map<int, unordered_map<int, int>>::const_iterator, unordered_map<int, unordered_map<int, int>>::const_iterator> GetNodesIterators() const;
+	// Mode d'emploi : retourne deux itérateurs constants correspondant au début et à la fin de la map des traductions Id -> Referers pour chaque cible
+
+	
 //------------------------------------------------------------------ PRIVE
 
 protected:
@@ -75,13 +84,7 @@ private:			//Attributs et fonctions privés
 						//alors le paramètre n'est pas pris en compte (champ heure compris entre 23 et 24).
 };
 
-
-
-
-//Définition d'un foncteur permettant au set<pair<int, int>> de pouvoir établir une relation d'ordre entre ses éléments,
-// basée sur la seconde composante de la paire
-
-//-------------------------------- Autres définitions dépendantes de <GraphData>
+//-------------------------------- Autres déclarations dépendantes de <GraphData>
 bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2);  
 //Surcharge de l'opérateur > pour le type pair<int, int> : renvoie vrai si la seconde composante de
 // la première paire est plus grande que la seconde composante de la seconde paire

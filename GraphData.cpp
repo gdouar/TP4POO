@@ -16,6 +16,7 @@ using namespace std;
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <utility>
 //------------------------------------------------------ Include personnel
 #include "Log.h"
 #include "GraphData.h"
@@ -142,6 +143,16 @@ void GraphData::GenerateGraphViz(string nomFichier)
 	gDao->serialize(id2Url, id2Referers);
 
 } //------ Fin de GenerateGraphViz
+
+pair<unordered_map<int, string>::const_iterator, unordered_map<int, string>::const_iterator> GraphData::GetMapIterators() const
+{
+	return make_pair(id2Url.cbegin(), id2Url.cend());
+} //----- Fin de GetMapIterators
+
+pair<unordered_map<int, unordered_map<int, int>>::const_iterator, unordered_map<int, unordered_map<int, int>>::const_iterator> GraphData::GetNodesIterators() const
+{
+	return make_pair(id2Referers.cbegin(), id2Referers.cend());
+}  //----- Fin de GetNodesIterators
 
 //------------------------------------------------------------------ PRIVE
 
