@@ -1,1 +1,1 @@
-../../analog -e -g fichier.dot ../filterFile.log
+../../analog -e -t 11:16:32 -g fichier.dot ../filterFile.log
