@@ -39,21 +39,16 @@ public:
    GraphDAO(string $filename="");
     // Mode d'emploi : Constructeur par défaut de GraphDAO.
 	
-	template <typename idType, typename contentType, typename linkType>
-	void serialize(unordered_map<idType, contentType> & id2Content, 
-					unordered_map<idType, unordered_map<idType, linkType>> &  id2Nodes)
+	template <typename contentType, typename linkType>
+	void serialize(vector<contentType> & id2Content, 
+					unordered_map<int, unordered_map<int, linkType>> &  id2Nodes)
 	// Mode d'emploi : méthode générique permettant de générer un graphe (fichier au format GraphViz).
-	// Le premier paramètre (id2Content) est une map associant à un identifiant de type idType un contenu de type contentType (noeud du graphe).
-	// Cette map permet de gérer le stockage en mémoire des éléments sans multiplier inutilement les valeurs des noeuds.
-	// Le second paramètre est une autre map associant à pour chaque noeud une map de ses prédécesseurs sous la forme <idPredecesseur, valeur de l'arc (de type contentType)>
+	// Le premier paramètre (id2Content) est un vector comportant un contenu de type contentType (noeud du graphe).
+	// Celui-ci permet de lister tous les contenus possibles sans avoir à multiplier inutilement des valeurs de noeuds stockées.
+	// Le second paramètre est une  map associant à pour chaque noeud une map de ses prédécesseurs sous la forme <indice correspondant du tableau, valeur de l'arc (de type contentType)>
 	// (qui sont donc également des successeurs potentiels d'autres noeuds). 
 	{
-		/*		Principe S => WIP
-		unordered_map<idType, contentType> id2Content;
-		copy(mapIterators.first, mapIterators.second, m1.begin());	//Map des traductions ID => contenu
-		* */
-		
-		
+	
 		//si 0 noeuds, afficher msg erreur
 		if(id2Content.empty())
 		{
@@ -95,15 +90,15 @@ public:
 		os << "digraph {\r\n";
 
 		//declaration des nodes
-		for(typename unordered_map<idType, contentType>::iterator it=id2Content.begin(); it != id2Content.end(); ++it)
+		for(typename vector<contentType>::iterator it=id2Content.begin(); it != id2Content.end(); ++it)
 		{
-			os << "node" << it->first << " [label=\"" << it->second << "\"];\r\n" ;
+			os << "node" << it - id2Content.begin() << " [label=\"" << *it << "\"];\r\n" ;
 		}
 
 		//declaration des liens referers / node
-		for(typename unordered_map<idType, unordered_map<idType, linkType>>::iterator itNode = id2Nodes.begin(); itNode != id2Nodes.end(); ++itNode)
+		for(typename unordered_map<int, unordered_map<int, linkType>>::iterator itNode = id2Nodes.begin(); itNode != id2Nodes.end(); ++itNode)
 		{
-			for(typename unordered_map<idType, linkType>::iterator itReferers = itNode->second.begin(); itReferers != itNode->second.end(); ++itReferers)
+			for(typename unordered_map<int, linkType>::iterator itReferers = itNode->second.begin(); itReferers != itNode->second.end(); ++itReferers)
 			{
 				os << "node" << itReferers->first << " -> node" << itNode->first << " [label=\"" << itReferers->second << "\"];\r\n";
 			}

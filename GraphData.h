@@ -16,6 +16,7 @@ using namespace std;
 #include <set>
 #include <string>
 #include <list>
+#include <vector>
 #include <fstream>
 #include <utility>
 
@@ -42,7 +43,7 @@ public:
 	// Mde : ajoute un log (ou non, en fonction des paramètres de filtrage) aux structures de données du graphe.
 	// Contrat : le log doit être non null !
 	
-	list<pair<int, string>> Get10best() ;
+	list<pair<int, string>> Get10best() const;
 	//Mde: renvoie une liste correspondant aux 10 ressources les plus consultées. 
 	//La liste comporte des éléments faisant correspondre une URL à un entier correspondant au nombre total de hits sur cette cible
 	//La liste est ordonnée en fonction de ce nombre total, du plus grand au plus petit.
@@ -53,13 +54,6 @@ public:
 
     void GenerateGraphViz(string nomFichier);
     // Mode d'emploi : génère le fichier au format GraphViz
-
-	pair<unordered_map<int, string>::const_iterator, unordered_map<int, string>::const_iterator> GetMapIterators() const;
-	//Mode d'emploi : retourne deux itérateurs constants correspondant au début et à la fin de la map des traductions Id -> URL
-	
-	pair<unordered_map<int, unordered_map<int, int>>::const_iterator, unordered_map<int, unordered_map<int, int>>::const_iterator> GetNodesIterators() const;
-	// Mode d'emploi : retourne deux itérateurs constants correspondant au début et à la fin de la map des traductions Id -> Referers pour chaque cible
-
 	
 //------------------------------------------------------------------ PRIVE
 
@@ -72,7 +66,7 @@ private:			//Attributs et fonctions privés
 	
 	int getReferer(string referer);
 	
-	unordered_map<int, string> id2Url;	   //Structure MAP comportant l'identifiant et le string de l'URL (l'id est une clé)
+	vector<string> id2Url;	   //Structure tableau comportant l'identifiant et le string de l'URL
 	unordered_map<int, unordered_map<int, int>> id2Referers;   //Structure MAP comportant l'identifiant de l'URL et les détails de ses referers
 	unordered_map<string, int> url2id;			//Structure MAP comportant le string et l'identifiant de l'URL (le string est une clé)
 	unordered_map<int, int> id2Totalhits;		//Structure MAP comportant l'ID de la cible associé à son nombre total de hits
@@ -90,9 +84,12 @@ bool operator > (std::pair<int, int> & p1, std::pair<int, int> & p2);
 // la première paire est plus grande que la seconde composante de la seconde paire
 
 bool operator < (std::pair<int, int> & p1, std::pair<int, int> & p2); 
+//Surcharge de l'opérateur < pour le type pair<int, int> : renvoie vrai si la seconde
+// composante de la première paire est plus inférieure à la seconde composante de la seconde paire
 
 bool operator >= (std::pair<int, int> & p1, std::pair<int, int> & p2);
 //Surcharge de l'opérateur > pour le type pair<int, int> : renvoie vrai si la seconde
 // composante de la première paire est plus grande ou égale à la seconde composante de la seconde paire
+
 #endif // GRAPHDATA_H
 

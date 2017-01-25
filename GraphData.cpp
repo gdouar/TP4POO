@@ -15,6 +15,7 @@ using namespace std;
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include <vector>
 #include <string>
 #include <utility>
 //------------------------------------------------------ Include personnel
@@ -49,7 +50,7 @@ bool operator >= (std::pair<int, int> & p1, std::pair<int, int> & p2)
 void GraphData::AddLog(Log * l)
 {
 //Algorithme : le but est, dans un premier temps, de retrouver ou d'enregistrer la correspondance cible/idCible de la ligne de log via
-// les maps id2URL et url2Id. Par la suite, on identifie la cible dans la map id2Referers. Si elle existe, on ajoute ou modifie le referer
+// id2URL et url2Id. Par la suite, on identifie la cible dans la map id2Referers. Si elle existe, on ajoute ou modifie le referer
 //associé à la ligne de log, ainsi que le nombre total de hits de la cible. Enfin, on insère ou modifie une entrée dans le set ordonné de paires
 // <idCible, nbTotalHits> urlAndHits pour maintenir la cohérence entre les deux structures de données.
 
@@ -67,7 +68,8 @@ void GraphData::AddLog(Log * l)
 	{
 		idCible = url2id.size();
 		url2id.insert(make_pair(cible, idCible));
-		id2Url.insert(make_pair(idCible, cible));
+		id2Url.push_back(cible);
+		//id2Url.insert(make_pair(idCible, cible));
 		// cout << "URL cible insérée. " << endl;
 	}
 	else
@@ -115,7 +117,7 @@ void GraphData::AddLog(Log * l)
 	return;
 }
 
-list<pair<int, string>> GraphData::Get10best()
+list<pair<int, string>> GraphData::Get10best() const
 {
 
 	list<pair<int, string>> l1; 
@@ -124,7 +126,7 @@ list<pair<int, string>> GraphData::Get10best()
 	{
 		
 		int idURL = (*it).second;
-		string url = (*(id2Url.find(idURL))).second;
+		string url = id2Url.at(idURL);
 		l1.push_back(make_pair((*it).first, url)); 
 	}
 	return l1;
@@ -144,16 +146,6 @@ void GraphData::GenerateGraphViz(string nomFichier)
 
 } //------ Fin de GenerateGraphViz
 
-pair<unordered_map<int, string>::const_iterator, unordered_map<int, string>::const_iterator> GraphData::GetMapIterators() const
-{
-	return make_pair(id2Url.cbegin(), id2Url.cend());
-} //----- Fin de GetMapIterators
-
-pair<unordered_map<int, unordered_map<int, int>>::const_iterator, unordered_map<int, unordered_map<int, int>>::const_iterator> GraphData::GetNodesIterators() const
-{
-	return make_pair(id2Referers.cbegin(), id2Referers.cend());
-}  //----- Fin de GetNodesIterators
-
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
@@ -170,7 +162,7 @@ int GraphData::getReferer(string referer)
 		// cout << "Referer inséré";
 		int idRef = url2id.size();
 		url2id.insert(make_pair(referer, idRef));
-		id2Url.insert(make_pair(idRef, referer));
+		id2Url.push_back(referer);
 		return idRef;
 	}
 	else {
